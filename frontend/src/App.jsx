@@ -193,6 +193,67 @@ export default function App() {
           </div>
         )}
 
+        {/* Blockchain Showcase Section */}
+        <div className="glass-card p-6 mb-8 rounded-xl">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-violet-300 to-indigo-300">
+                Blockchain Integration
+              </h2>
+              <p className="text-gray-400 mt-1">Live blockchain data and smart contract information</p>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
+              <span className="text-sm text-green-400">Connected</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="text-center p-4 bg-gray-800/50 rounded-lg">
+              <div className="text-2xl font-bold text-violet-400 mb-2">
+                {CONTRACT_ADDRESS.slice(0, 6)}...{CONTRACT_ADDRESS.slice(-4)}
+              </div>
+              <p className="text-sm text-gray-400">Contract Address</p>
+            </div>
+            
+            <div className="text-center p-4 bg-gray-800/50 rounded-lg">
+              <div className="text-2xl font-bold text-indigo-400 mb-2">
+                Ethereum
+              </div>
+              <p className="text-sm text-gray-400">Network</p>
+            </div>
+            
+            <div className="text-center p-4 bg-gray-800/50 rounded-lg">
+              <div className="text-2xl font-bold text-purple-400 mb-2">
+                Live
+              </div>
+              <p className="text-sm text-gray-400">Status</p>
+            </div>
+          </div>
+
+          <div className="mt-6 p-4 bg-gradient-to-r from-violet-900/30 to-indigo-900/30 rounded-lg border border-violet-500/20">
+            <h3 className="text-lg font-semibold text-violet-300 mb-3">Smart Contract Features</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                <span className="text-gray-300">Product Creation</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                <span className="text-gray-300">Status Updates</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                <span className="text-gray-300">History Tracking</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                <span className="text-gray-300">Immutable Records</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-1">
             <TrackForm
@@ -268,6 +329,7 @@ export default function App() {
                 signer={signer}
                 search={search}
                 filter={filter}
+                refreshKey={refreshKey}
               />
             </div>
           </div>

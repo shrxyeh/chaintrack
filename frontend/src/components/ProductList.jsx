@@ -18,7 +18,7 @@ const StatusIcons = [
   </svg>
 ];
 
-export default function ProductList({ contractAddress, signer, search, filter }) {
+export default function ProductList({ contractAddress, signer, search, filter, refreshKey }) {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState(null);
@@ -62,7 +62,7 @@ export default function ProductList({ contractAddress, signer, search, filter })
       }
     }
     fetchProducts();
-  }, [contractAddress]);
+  }, [contractAddress, refreshKey]); // Added refreshKey to dependency array
 
   async function changeStatus(id, newStatus) {
     if (!signer) {
@@ -74,8 +74,19 @@ export default function ProductList({ contractAddress, signer, search, filter })
       const contract = new Contract(contractAddress, SupplyChainABI.abi, signer);
       const tx = await contract.updateStatus(id, newStatus);
       await tx.wait();
+      
+      // Update the product in state and also update history
       setProducts((prev) =>
-        prev.map((p) => (p.id === id ? { ...p, status: newStatus } : p))
+        prev.map((p) => {
+          if (p.id === id) {
+            const newHistory = [...p.history, {
+              status: newStatus,
+              timestamp: Math.floor(Date.now() / 1000) // Current timestamp
+            }];
+            return { ...p, status: newStatus, history: newHistory };
+          }
+          return p;
+        })
       );
     } catch (e) {
       console.error("Status update failed:", e);
