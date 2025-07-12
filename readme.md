@@ -9,7 +9,4 @@ Built with Hardhat smart contracts, React, Tailwind CSS, and ethers.js.
 - On‑chain history & timestamps  
 - Live search by name/ID and filter by status  
 
-## Demo Video
-
-<img src="./video.gif" width="100%" />
 
