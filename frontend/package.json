@@ -10,9 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "ethers": "^6.8.0",
+    "gsap": "^3.13.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "ethers": "^6.8.0"
+    "react-router-dom": "^7.6.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
@@ -30,4 +32,3 @@
     "vite": "^6.3.5"
   }
 }
-

@@ -2,80 +2,118 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
 @layer base {
-  :root {
-    --primary: #8b5cf6;
-    --secondary: #ec4899;
-    --accent: #06b6d4;
-    --dark: #0f172a;
-    --darker: #0a0f1f;
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    scroll-behavior: smooth;
   }
   
   body {
-    @apply bg-gradient-to-br from-[var(--darker)] to-[var(--dark)] text-gray-200 min-h-screen;
-    font-family: 'Inter', sans-serif;
+    @apply bg-white text-walmart-gray-900 font-walmart;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold text-walmart-gray-900;
+    line-height: 1.2;
+  }
+  
+  p {
+    @apply text-walmart-gray-700;
   }
 }
 
 @layer components {
-  .glass-card {
-    @apply bg-gray-900/60 backdrop-blur-md border border-gray-800 rounded-xl;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  .walmart-card {
+    @apply bg-white rounded-xl shadow-walmart border border-walmart-blue-100 transition-all duration-300 hover:shadow-walmart-lg;
   }
   
-  .glow-effect {
-    position: relative;
+  .walmart-btn-primary {
+    @apply bg-walmart-blue-600 hover:bg-walmart-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-walmart;
   }
   
-  .glow-effect::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: inherit;
-    background: radial-gradient(circle at center, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+  .walmart-btn-secondary {
+    @apply bg-walmart-yellow-500 hover:bg-walmart-yellow-600 text-walmart-gray-900 font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-walmart;
   }
   
-  .glow-effect:hover::before {
-    opacity: 1;
+  .walmart-btn-accent {
+    @apply bg-walmart-orange-500 hover:bg-walmart-orange-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-walmart;
   }
   
-  .status-badge {
-    @apply px-3 py-1 rounded-full text-xs font-semibold;
+  .walmart-input {
+    @apply w-full px-4 py-3 border border-walmart-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-walmart-blue-500 focus:border-transparent transition-all duration-300;
   }
   
-  .animate-pulse-slow {
-    animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  .walmart-gradient {
+    background: linear-gradient(135deg, #0071CE 0%, #004C91 100%);
   }
   
-  @keyframes pulse-slow {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.7;
-    }
+  .walmart-gradient-yellow {
+    background: linear-gradient(135deg, #FFDE00 0%, #FFC220 100%);
   }
   
-  .fade-in {
-    animation: fadeIn 0.5s ease-in forwards;
+  .section-padding {
+    @apply py-16 px-4 sm:px-6 lg:px-8;
   }
   
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+  .container-walmart {
+    @apply max-w-7xl mx-auto;
   }
   
-  .timeline-dot {
-    @apply absolute top-4 left-0 w-3 h-3 rounded-full;
+  .status-badge-created {
+    @apply bg-walmart-blue-100 text-walmart-blue-800 px-3 py-1 rounded-full text-sm font-medium;
   }
   
-  .timeline-line {
-    @apply absolute top-4 bottom-0 left-1.5 w-px;
+  .status-badge-transit {
+    @apply bg-walmart-yellow-100 text-walmart-yellow-800 px-3 py-1 rounded-full text-sm font-medium;
+  }
+  
+  .status-badge-delivered {
+    @apply bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium;
+  }
+  
+  .floating-element {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .floating-element:nth-child(2) {
+    animation-delay: -2s;
+  }
+  
+  .floating-element:nth-child(3) {
+    animation-delay: -4s;
+  }
+  
+  .loading-skeleton {
+    @apply bg-walmart-gray-200 animate-pulse rounded;
+  }
+  
+  .walmart-hero-bg {
+    background: linear-gradient(135deg, #0071CE 0%, #004C91 50%, #001F3D 100%);
+  }
+}
+
+@layer utilities {
+  .text-gradient-walmart {
+    background: linear-gradient(135deg, #0071CE 0%, #004C91 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .text-gradient-yellow {
+    background: linear-gradient(135deg, #FFDE00 0%, #FFC220 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
