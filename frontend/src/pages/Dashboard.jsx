@@ -9,7 +9,7 @@ import InteractiveDashboard from "../components/InteractiveDashboard";
 import QRHistory from "../components/QRHistory";
 import { setupCardHovers } from "../utils/animations";
 
-const CONTRACT_ADDRESS = "0x73EBB01e6e9a546bEe36d8d714569f9D9AA854f6";
+const CONTRACT_ADDRESS = "0xAab7F3fbB8Ff8fa54A57b2CA9500433Ae675acd8";
 
 export default function Dashboard({ signer: propSigner }) {
   const [refreshKey, setRefreshKey] = useState(0);
