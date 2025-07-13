@@ -7,6 +7,13 @@ export default function WalmartHeader({ walletAddress, onConnectWallet, onDiscon
   
   const isActive = (path) => location.pathname === path;
   
+  const navItems = [
+    { path: '/', label: 'Home' },
+    { path: '/dashboard', label: 'Dashboard' },
+    { path: '/features', label: 'Features' },
+    { path: '/how-it-works', label: 'How It Works' }
+  ];
+  
   return (
     <header className="bg-white shadow-walmart border-b border-walmart-blue-100 sticky top-0 z-50">
       <div className="container-walmart">
@@ -26,38 +33,19 @@ export default function WalmartHeader({ walletAddress, onConnectWallet, onDiscon
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link 
-              to="/" 
-              className={`font-medium transition-colors ${
-                isActive('/') 
-                  ? 'text-walmart-blue-700 border-b-2 border-walmart-blue-700 pb-1' 
-                  : 'text-walmart-gray-800 hover:text-walmart-blue-700'
-              }`}
-            >
-              Home
-            </Link>
-            <Link 
-              to="/dashboard" 
-              className={`font-medium transition-colors ${
-                isActive('/dashboard') 
-                  ? 'text-walmart-blue-700 border-b-2 border-walmart-blue-700 pb-1' 
-                  : 'text-walmart-gray-800 hover:text-walmart-blue-700'
-              }`}
-            >
-              Dashboard
-            </Link>
-            <a 
-              href="#features" 
-              className="text-walmart-gray-800 hover:text-walmart-blue-700 font-medium transition-colors"
-            >
-              Features
-            </a>
-            <a 
-              href="#how-it-works" 
-              className="text-walmart-gray-800 hover:text-walmart-blue-700 font-medium transition-colors"
-            >
-              How It Works
-            </a>
+            {navItems.map((item) => (
+              <Link 
+                key={item.path}
+                to={item.path} 
+                className={`font-medium transition-all duration-300 ${
+                  isActive(item.path) 
+                    ? 'text-walmart-blue-700 border-b-2 border-walmart-blue-700 pb-1' 
+                    : 'text-walmart-gray-800 hover:text-walmart-blue-700 hover:border-b-2 hover:border-walmart-blue-300 pb-1'
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
           </nav>
 
           {/* Wallet Connection & Mobile Menu */}
@@ -115,38 +103,18 @@ export default function WalmartHeader({ walletAddress, onConnectWallet, onDiscon
         {isMenuOpen && (
           <div className="md:hidden border-t border-walmart-gray-200 bg-white">
             <div className="px-4 py-4 space-y-4">
-              <Link 
-                to="/" 
-                className={`block font-medium ${
-                  isActive('/') ? 'text-walmart-blue-700' : 'text-walmart-gray-800'
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Home
-              </Link>
-              <Link 
-                to="/dashboard" 
-                className={`block font-medium ${
-                  isActive('/dashboard') ? 'text-walmart-blue-700' : 'text-walmart-gray-800'
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Dashboard
-              </Link>
-              <a 
-                href="#features" 
-                className="block text-walmart-gray-800 font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Features
-              </a>
-              <a 
-                href="#how-it-works" 
-                className="block text-walmart-gray-800 font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                How It Works
-              </a>
+              {navItems.map((item) => (
+                <Link 
+                  key={item.path}
+                  to={item.path} 
+                  className={`block font-medium transition-colors ${
+                    isActive(item.path) ? 'text-walmart-blue-700' : 'text-walmart-gray-800'
+                  }`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ))}
             </div>
           </div>
         )}

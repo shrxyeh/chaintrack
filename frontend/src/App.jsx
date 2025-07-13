@@ -5,6 +5,8 @@ import { getMetaMaskProvider } from "./utils/ethProvider";
 import WalmartHeader from "./components/WalmartHeader";
 import LandingPage from "./pages/LandingPage";
 import Dashboard from "./pages/Dashboard";
+import FeaturesPage from "./pages/FeaturesPage";
+import HowItWorksPage from "./pages/HowItWorksPage";
 
 export default function App() {
   const [walletAddress, setWalletAddress] = useState(null);
@@ -67,7 +69,9 @@ export default function App() {
         />
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard signer={signer} />} />
+          <Route path="/features" element={<FeaturesPage />} />
+          <Route path="/how-it-works" element={<HowItWorksPage />} />
         </Routes>
       </div>
     </Router>

@@ -46,21 +46,21 @@ export default function FeatureShowcase() {
   ];
 
   return (
-    <section id="features" className="features-section section-padding bg-walmart-blue-50">
+    <section id="features" className="features-section section-padding bg-white relative z-10">
       <div className="container-walmart">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-walmart-gray-900 mb-4">
             Why Choose Blockchain for Supply Chain?
           </h2>
-          <p className="text-xl text-walmart-gray-700 max-w-3xl mx-auto">
+          <p className="text-xl text-walmart-gray-800 max-w-3xl mx-auto">
             Transform your supply chain with cutting-edge blockchain technology that delivers 
             unprecedented transparency, security, and efficiency.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-20">
           {features.map((feature, index) => (
-            <div key={index} className="feature-card walmart-card p-6 text-center group">
+            <div key={index} className="feature-card walmart-card p-6 text-center group bg-white relative z-30 shadow-walmart-lg">
               <div className="w-16 h-16 walmart-gradient rounded-xl flex items-center justify-center text-white mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                 {feature.icon}
               </div>
@@ -75,19 +75,19 @@ export default function FeatureShowcase() {
         </div>
 
         {/* Additional Benefits */}
-        <div className="mt-16 walmart-card p-8">
+        <div className="mt-16 walmart-card p-8 bg-white relative z-20 shadow-walmart-lg">
           <div className="grid md:grid-cols-3 gap-8 text-center">
             <div>
               <div className="text-3xl font-bold text-walmart-blue-600 mb-2">99.9%</div>
-              <div className="text-walmart-gray-800">Data Accuracy</div>
+              <div className="text-walmart-gray-800 font-medium">Data Accuracy</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-walmart-blue-600 mb-2">50%</div>
-              <div className="text-walmart-gray-800">Cost Reduction</div>
+              <div className="text-walmart-gray-800 font-medium">Cost Reduction</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-walmart-blue-600 mb-2">24/7</div>
-              <div className="text-walmart-gray-800">Real-time Monitoring</div>
+              <div className="text-walmart-gray-800 font-medium">Real-time Monitoring</div>
             </div>
           </div>
         </div>
