@@ -7,13 +7,13 @@ import { setupCardHovers } from "../utils/animations";
 
 const CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
-export default function Dashboard() {
+export default function Dashboard({ signer: propSigner }) {
   const [refreshKey, setRefreshKey] = useState(0);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
   const [isLoading, setIsLoading] = useState(true);
   const [walletAddress, setWalletAddress] = useState(null);
-  const [signer, setSigner] = useState(null);
+  const [signer, setSigner] = useState(propSigner);
 
   const connectWallet = async () => {
     const mmProvider = getMetaMaskProvider();
@@ -39,11 +39,23 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    connectWallet();
+    if (propSigner) {
+      setSigner(propSigner);
+      propSigner.getAddress().then(setWalletAddress);
+    } else {
+      connectWallet();
+    }
     setupCardHovers();
     const timer = setTimeout(() => setIsLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (propSigner) {
+      setSigner(propSigner);
+      propSigner.getAddress().then(setWalletAddress);
+    }
+  }, [propSigner]);
 
   useEffect(() => {
     const mmProvider = getMetaMaskProvider();

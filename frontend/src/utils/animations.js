@@ -202,4 +202,4 @@ export const scrollReveal = (selector, options = {}) => {
     },
     ...finalOptions
   });
-};
+}
