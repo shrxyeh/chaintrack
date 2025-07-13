@@ -162,7 +162,6 @@ export default function App() {
             )}
 
             <a
-              href="https://github.com/iAmReal-dev/Brainwave_Matrix__Intern"
               target="_blank"
               rel="noopener noreferrer"
               className="glass-card p-2 px-4 rounded-lg flex items-center hover:bg-gray-900/30 transition-colors"
