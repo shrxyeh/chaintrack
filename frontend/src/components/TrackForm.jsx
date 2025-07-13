@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Contract } from "ethers";
 import SupplyChainABI from "../SupplyChain.json";
 import { animateFormError, animateSuccess } from "../utils/animations";
 
-export default function TrackForm({ contractAddress, signer, onCreate }) {
-  const [name, setName] = useState("");
-  const [origin, setOrigin] = useState("");
+export default function TrackForm({ contractAddress, signer, onCreate, initialName = "", initialOrigin = "" }) {
+  const [name, setName] = useState(initialName);
+  const [origin, setOrigin] = useState(initialOrigin);
   const [isLoading, setIsLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState(null);
+
+  // Update form when initial values change (from QR scan)
+  useEffect(() => {
+    if (initialName) setName(initialName);
+    if (initialOrigin) setOrigin(initialOrigin);
+  }, [initialName, initialOrigin]);
 
   async function handleCreate() {
     if (!signer) {

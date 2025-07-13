@@ -21,6 +21,7 @@ export default function Dashboard({ signer: propSigner }) {
   const [activeTab, setActiveTab] = useState('overview');
   const [showQRScanner, setShowQRScanner] = useState(false);
   const [products, setProducts] = useState([]);
+  const [qrFormData, setQrFormData] = useState({ name: "", origin: "" });
 
   const connectWallet = async () => {
     const mmProvider = getMetaMaskProvider();
@@ -86,19 +87,49 @@ export default function Dashboard({ signer: propSigner }) {
 
   const handleQRScan = (data, result) => {
     console.log('QR Scanned:', data);
-    // Process QR scan data - could be product ID, batch number, etc.
-    if (data.includes('product-')) {
-      const productId = data.replace('product-', '');
-      setSearch(productId);
-      setActiveTab('tracking');
+    let productId = null;
+    let productName = null;
+    let location = null;
+    let type = 'unknown';
+
+    // Try to parse as JSON
+    try {
+      const parsed = JSON.parse(data);
+      productId = parsed.productId || null;
+      productName = parsed.productName || null;
+      location = parsed.location || null;
+      type = 'product';
+    } catch (e) {
+      // If not JSON, try to parse as delimited string: product-123|Widget|Warehouse A
+      if (data.startsWith('product-')) {
+        const parts = data.split('|');
+        productId = parts[0].replace('product-', '');
+        productName = parts[1] || null;
+        location = parts[2] || null;
+        type = 'product';
+      }
     }
+
+    // Auto-fill the form with scanned data
+    if (productName && location) {
+      setQrFormData({ name: productName, origin: location });
+      setActiveTab('tracking'); // Switch to tracking tab to show the form
+    }
+
+    if (productId) {
+      setSearch(productId);
+    }
+
     // Add to scan history
     const scanHistory = JSON.parse(localStorage.getItem('qrScanHistory') || '[]');
     const newScan = {
       id: Date.now(),
       data,
+      productId,
+      productName,
+      location,
       timestamp: new Date().toISOString(),
-      type: data.includes('product-') ? 'product' : 'unknown'
+      type
     };
     localStorage.setItem('qrScanHistory', JSON.stringify([newScan, ...scanHistory].slice(0, 50)));
   };
@@ -324,6 +355,8 @@ export default function Dashboard({ signer: propSigner }) {
                   contractAddress={CONTRACT_ADDRESS}
                   signer={signer}
                   onCreate={() => setRefreshKey((k) => k + 1)}
+                  initialName={qrFormData.name}
+                  initialOrigin={qrFormData.origin}
                 />
               </div>
               <div className="lg:col-span-2">

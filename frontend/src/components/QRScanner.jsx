@@ -1,60 +1,82 @@
-import { useState, useRef, useEffect } from 'react';
-import { Html5QrcodeScanner } from 'html5-qrcode';
+import { useState, useRef, useEffect } from "react";
+import { Html5QrcodeScanner } from "html5-qrcode";
 
 export default function QRScanner({ onScan, isActive, onClose }) {
-  const [scanResult, setScanResult] = useState(null);
+  const [scanning, setScanning] = useState(false);
   const [error, setError] = useState(null);
   const scannerRef = useRef(null);
-  const html5QrcodeScannerRef = useRef(null);
 
   useEffect(() => {
-    if (isActive && scannerRef.current) {
-      const config = {
-        fps: 10,
-        qrbox: { width: 250, height: 250 },
-        aspectRatio: 1.0,
-        disableFlip: false,
-      };
+    if (isActive && !scanning) {
+      startScanner();
+    } else if (!isActive && scanning) {
+      stopScanner();
+    }
+  }, [isActive]);
 
-      html5QrcodeScannerRef.current = new Html5QrcodeScanner(
+  const startScanner = () => {
+    try {
+      setError(null);
+      setScanning(true);
+
+      const scanner = new Html5QrcodeScanner(
         "qr-reader",
-        config,
+        {
+          fps: 10,
+          qrbox: { width: 250, height: 250 },
+          aspectRatio: 1.0,
+        },
         false
       );
 
-      html5QrcodeScannerRef.current.render(
+      scanner.render(
         (decodedText, decodedResult) => {
-          setScanResult(decodedText);
-          setError(null);
-          onScan?.(decodedText, decodedResult);
-          
-          // Auto-close scanner after successful scan
-          setTimeout(() => {
-            html5QrcodeScannerRef.current?.clear();
-            onClose?.();
-          }, 1000);
+          console.log("QR Code detected:", decodedText);
+          onScan(decodedText, decodedResult);
+          stopScanner();
+          onClose();
         },
-        (error) => {
-          // Handle scan errors silently for better UX
-          console.debug('QR scan error:', error);
+        (errorMessage) => {
+          // Ignore errors during scanning
+          console.log("QR Scanner error:", errorMessage);
         }
       );
+
+      scannerRef.current = scanner;
+    } catch (err) {
+      console.error("Failed to start QR scanner:", err);
+      setError("Failed to start camera. Please check permissions.");
+      setScanning(false);
     }
+  };
 
-    return () => {
-      if (html5QrcodeScannerRef.current) {
-        html5QrcodeScannerRef.current.clear().catch(console.error);
+  const stopScanner = () => {
+    if (scannerRef.current) {
+      try {
+        scannerRef.current.clear();
+        scannerRef.current = null;
+      } catch (err) {
+        console.error("Error stopping scanner:", err);
       }
-    };
-  }, [isActive, onScan, onClose]);
+    }
+    setScanning(false);
+  };
 
-  if (!isActive) return null;
+  useEffect(() => {
+    return () => {
+      stopScanner();
+    };
+  }, []);
+
+  if (!isActive) {
+    return null;
+  }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl p-6 max-w-md w-full mx-4">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-bold text-walmart-gray-900">Scan QR Code</h3>
+          <h3 className="text-lg font-bold text-walmart-gray-900">Scan QR Code</h3>
           <button
             onClick={onClose}
             className="text-walmart-gray-500 hover:text-walmart-gray-700"
@@ -65,27 +87,40 @@ export default function QRScanner({ onScan, isActive, onClose }) {
           </button>
         </div>
 
-        <div id="qr-reader" ref={scannerRef} className="w-full"></div>
-
-        {scanResult && (
-          <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
-            <p className="text-green-800 text-sm">
-              <strong>Scanned:</strong> {scanResult}
-            </p>
+        {error ? (
+          <div className="text-center py-8">
+            <div className="text-red-500 mb-4">
+              <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+              </svg>
+            </div>
+            <p className="text-red-600 font-medium">{error}</p>
+            <button
+              onClick={() => {
+                setError(null);
+                startScanner();
+              }}
+              className="mt-4 walmart-btn-primary"
+            >
+              Try Again
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <div className="text-center text-sm text-walmart-gray-600 mb-4">
+              Position the QR code within the frame to scan
+            </div>
+            <div id="qr-reader" className="w-full"></div>
+            <div className="text-center">
+              <button
+                onClick={onClose}
+                className="walmart-btn-secondary"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         )}
-
-        {error && (
-          <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-800 text-sm">{error}</p>
-          </div>
-        )}
-
-        <div className="mt-4 text-center">
-          <p className="text-sm text-walmart-gray-600">
-            Position the QR code within the frame to scan
-          </p>
-        </div>
       </div>
     </div>
   );

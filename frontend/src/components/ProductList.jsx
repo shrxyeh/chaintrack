@@ -24,6 +24,8 @@ export default function ProductList({ contractAddress, signer, search, filter, r
   const [isLoading, setIsLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState(null);
   const [showUpdateToast, setShowUpdateToast] = useState(false);
+  const [showQRModal, setShowQRModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -135,6 +137,43 @@ export default function ProductList({ contractAddress, signer, search, filter, r
     );
   }
 
+  const generateProductQR = (product) => {
+    const trackingData = {
+      productId: product.id.toString(),
+      productName: product.name,
+      location: product.origin,
+      currentStatus: StatusNames[product.status],
+      createdAt: new Date(product.createdAt * 1000).toISOString(),
+      contractAddress: contractAddress,
+      history: product.history.map(h => ({
+        status: StatusNames[h.status],
+        timestamp: new Date(h.timestamp * 1000).toISOString()
+      }))
+    };
+    
+    return JSON.stringify(trackingData);
+  };
+
+  const showQRCode = (product) => {
+    setSelectedProduct(product);
+    setShowQRModal(true);
+  };
+
+  const downloadQRCode = async (product) => {
+    const qrData = generateProductQR(product);
+    
+    // Create QR code using a simple approach (you might want to use a QR library)
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(qrData)}`;
+    
+    // Create a temporary link to download the QR code
+    const link = document.createElement('a');
+    link.href = qrUrl;
+    link.download = `product_${product.id}_${product.name.replace(/\s+/g, '_')}.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="grid grid-cols-1 gap-4">
       {showUpdateToast && (
@@ -142,6 +181,83 @@ export default function ProductList({ contractAddress, signer, search, filter, r
           Product list updated!
         </div>
       )}
+      
+      {/* QR Modal */}
+      {showQRModal && selectedProduct && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-bold text-walmart-gray-900">Product QR Code</h3>
+              <button
+                onClick={() => setShowQRModal(false)}
+                className="text-walmart-gray-500 hover:text-walmart-gray-700"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
+            <div className="text-center">
+              <div className="mb-4">
+                <h4 className="font-semibold text-walmart-gray-900">{selectedProduct.name}</h4>
+                <p className="text-sm text-walmart-gray-600">ID: {selectedProduct.id}</p>
+                <p className="text-sm text-walmart-gray-600">Status: {StatusNames[selectedProduct.status]}</p>
+              </div>
+              {/* QR Code Image */}
+              <div className="flex justify-center mb-4">
+                <img
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(generateProductQR(selectedProduct))}`}
+                  alt="Product QR Code"
+                  className="mx-auto rounded border bg-white"
+                  width={180}
+                  height={180}
+                />
+              </div>
+              <div className="bg-gray-100 p-4 rounded-lg mb-4">
+                <p className="text-xs text-gray-600 mb-2">QR Code contains:</p>
+                {/* Render details as key-value pairs */}
+                <div className="text-left text-xs bg-white p-2 rounded border mb-2">
+                  <div><b>Product ID:</b> {selectedProduct.id}</div>
+                  <div><b>Product Name:</b> {selectedProduct.name}</div>
+                  <div><b>Location:</b> {selectedProduct.origin}</div>
+                  <div><b>Status:</b> {StatusNames[selectedProduct.status]}</div>
+                  <div><b>Created At:</b> {new Date(selectedProduct.createdAt * 1000).toLocaleString()}</div>
+                  <div><b>Contract Address:</b> <span className="font-mono">{contractAddress}</span></div>
+                  <div className="mt-2"><b>History:</b></div>
+                  <ul className="ml-4 list-disc">
+                    {selectedProduct.history.map((h, idx) => (
+                      <li key={idx}>
+                        <span className="font-medium">{StatusNames[h.status]}</span> at {new Date(h.timestamp * 1000).toLocaleString()}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                {/* Still show the JSON for reference, but wrapped */}
+                <div className="text-left text-xs bg-white p-2 rounded border overflow-x-auto break-all whitespace-pre-wrap">
+                  <pre className="break-all whitespace-pre-wrap">{generateProductQR(selectedProduct)}</pre>
+                </div>
+              </div>
+              
+              <div className="flex gap-2">
+                <button
+                  onClick={() => downloadQRCode(selectedProduct)}
+                  className="walmart-btn-primary flex-1"
+                >
+                  Download QR
+                </button>
+                <button
+                  onClick={() => setShowQRModal(false)}
+                  className="walmart-btn-secondary flex-1"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {filtered.map(p => (
         <div
           key={p.id}
@@ -167,6 +283,17 @@ export default function ProductList({ contractAddress, signer, search, filter, r
               <span className={`px-3 py-1 rounded-full text-sm font-medium text-white ${StatusColors[p.status]}`}>
                 {StatusNames[p.status]}
               </span>
+
+              {/* QR Code Button */}
+              <button
+                onClick={() => showQRCode(p)}
+                className="p-2 text-walmart-blue-600 hover:text-walmart-blue-800 hover:bg-walmart-blue-50 rounded-lg transition-colors"
+                title="Generate QR Code"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M12 12h-4.01M12 12v4m6-4h.01M12 8h.01" />
+                </svg>
+              </button>
 
               <div className="relative">
                 <select
