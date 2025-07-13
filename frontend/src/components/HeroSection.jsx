@@ -4,8 +4,13 @@ import { animateHero, animateFloatingElements } from '../utils/animations';
 
 export default function HeroSection() {
   useEffect(() => {
-    animateHero();
-    animateFloatingElements();
+    // Delay animations to ensure DOM is ready
+    const timer = setTimeout(() => {
+      animateHero();
+      animateFloatingElements();
+    }, 100);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   return (

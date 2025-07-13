@@ -3,7 +3,12 @@ import { animateStats } from '../utils/animations';
 
 export default function StatsSection() {
   useEffect(() => {
-    animateStats();
+    // Ensure stats elements are ready before animating
+    const timer = setTimeout(() => {
+      animateStats();
+    }, 400);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   const stats = [

@@ -3,7 +3,12 @@ import { animateFeatureCards } from '../utils/animations';
 
 export default function FeatureShowcase() {
   useEffect(() => {
-    animateFeatureCards();
+    // Ensure proper timing for animations
+    const timer = setTimeout(() => {
+      animateFeatureCards();
+    }, 200);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   const features = [

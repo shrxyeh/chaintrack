@@ -8,7 +8,12 @@ import { setupCardHovers } from '../utils/animations';
 
 export default function LandingPage() {
   useEffect(() => {
-    setupCardHovers();
+    // Initialize animations with proper timing
+    const timer = setTimeout(() => {
+      setupCardHovers();
+    }, 500);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   return (

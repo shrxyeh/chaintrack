@@ -3,7 +3,12 @@ import { animateHowItWorks } from '../utils/animations';
 
 export default function HowItWorks() {
   useEffect(() => {
-    animateHowItWorks();
+    // Delay animation to ensure elements are rendered
+    const timer = setTimeout(() => {
+      animateHowItWorks();
+    }, 300);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   const steps = [
