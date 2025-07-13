@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 // Debug mode - set to true to enable markers and console logs
-const DEBUG_MODE = false;
+let DEBUG_MODE = false;
 
 // Helper function for debug logging
 const debugLog = (message, data = null) => {
