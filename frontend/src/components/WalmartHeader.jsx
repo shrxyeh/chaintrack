@@ -71,14 +71,14 @@ export default function WalmartHeader({ walletAddress, onConnectWallet, onDiscon
             {/* Wallet Connection */}
             {walletAddress ? (
               <div className="flex items-center space-x-2">
-                <div className="hidden sm:block bg-walmart-green-50 px-3 py-1 rounded-full">
-                  <span className="text-sm text-walmart-green-700 font-medium">
+                <div className="hidden sm:block bg-green-50 px-3 py-1 rounded-full">
+                  <span className="text-sm text-green-700 font-medium">
                     {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
                   </span>
                 </div>
                 <button
                   onClick={onDisconnectWallet}
-                  className="text-walmart-gray-600 hover:text-walmart-red-600 transition-colors"
+                  className="text-walmart-gray-600 hover:text-red-600 transition-colors"
                   title="Disconnect Wallet"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

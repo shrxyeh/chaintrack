@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { BrowserProvider, Contract } from "ethers";
 import SupplyChainABI from "../SupplyChain.json";
 import { getMetaMaskProvider } from "../utils/ethProvider";
+import { animateSuccess } from "../utils/animations";
 
 const StatusNames = ["Created", "In Transit", "Delivered"];
-const StatusColors = ["bg-blue-600", "bg-yellow-500", "bg-green-600"];
+const StatusColors = ["bg-walmart-blue-600", "bg-walmart-yellow-500", "bg-green-600"];
 const StatusIcons = [
   <svg key="created" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -58,6 +59,7 @@ export default function ProductList({ contractAddress, signer, search, filter, r
         setProducts(items);
         if (refreshKey > 0) {
           setShowUpdateToast(true);
+          animateSuccess(document.querySelector('.update-toast'));
           setTimeout(() => setShowUpdateToast(false), 2500);
         }
       } catch (e) {
@@ -113,7 +115,7 @@ export default function ProductList({ contractAddress, signer, search, filter, r
   if (isLoading) {
     return (
       <div className="flex justify-center py-12">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-violet-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-walmart-blue-500"></div>
       </div>
     );
   }
@@ -121,13 +123,13 @@ export default function ProductList({ contractAddress, signer, search, filter, r
   if (filtered.length === 0) {
     return (
       <div className="text-center py-12">
-        <div className="inline-block p-4 rounded-full bg-gray-800 mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="inline-block p-4 rounded-full bg-walmart-gray-100 mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-walmart-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
-        <h3 className="text-xl font-medium text-gray-300">No products found</h3>
-        <p className="text-gray-500 mt-2">Try adjusting your search or filter criteria</p>
+        <h3 className="text-xl font-medium text-walmart-gray-700">No products found</h3>
+        <p className="text-walmart-gray-500 mt-2">Try adjusting your search or filter criteria</p>
       </div>
     );
   }
@@ -135,14 +137,14 @@ export default function ProductList({ contractAddress, signer, search, filter, r
   return (
     <div className="grid grid-cols-1 gap-4">
       {showUpdateToast && (
-        <div className="fixed top-6 right-6 z-50 bg-green-800 border border-green-600 text-green-200 px-6 py-3 rounded-lg shadow-lg animate-fade">
+        <div className="update-toast fixed top-6 right-6 z-50 bg-green-600 text-white px-6 py-3 rounded-lg shadow-walmart-lg">
           Product list updated!
         </div>
       )}
       {filtered.map(p => (
         <div
           key={p.id}
-          className="glass-card p-5 rounded-xl transition-all duration-300 hover:shadow-lg fade-in"
+          className="walmart-card p-5 transition-all duration-300 hover:shadow-walmart-lg"
         >
           <div className="flex justify-between items-start flex-wrap gap-5">
             <div className="flex items-start">
@@ -151,23 +153,23 @@ export default function ProductList({ contractAddress, signer, search, filter, r
               </div>
               <div>
                 <h3 className="text-lg font-bold">{p.name}
-                  <span className="text-gray-400 ml-2 font-normal">#{p.id.toString().padStart(4, '0')}</span>
+                  <span className="text-walmart-gray-500 ml-2 font-normal">#{p.id.toString().padStart(4, '0')}</span>
                 </h3>
-                <p className="text-sm text-gray-400 mt-1">Origin: {p.origin}</p>
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-sm text-walmart-gray-600 mt-1">Origin: {p.origin}</p>
+                <p className="text-xs text-walmart-gray-500 mt-1">
                   Created: {new Date(p.createdAt * 1e3).toLocaleDateString()}
                 </p>
               </div>
             </div>
 
             <div className="flex items-center space-x-3">
-              <span className={`status-badge ${StatusColors[p.status]}`}>
+              <span className={`px-3 py-1 rounded-full text-sm font-medium text-white ${StatusColors[p.status]}`}>
                 {StatusNames[p.status]}
               </span>
 
               <div className="relative">
                 <select
-                  className="bg-gray-800 border border-gray-700 rounded-lg py-1 pl-3 pr-8 appearance-none focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent text-sm"
+                  className="bg-white border border-walmart-gray-300 rounded-lg py-2 pl-3 pr-8 appearance-none focus:outline-none focus:ring-2 focus:ring-walmart-blue-500 focus:border-transparent text-sm"
                   value={p.status}
                   onChange={e => changeStatus(p.id, Number(e.target.value))}
                   disabled={updatingId === p.id || !signer}
@@ -176,7 +178,7 @@ export default function ProductList({ contractAddress, signer, search, filter, r
                     <option key={idx} value={idx}>{name}</option>
                   ))}
                 </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-walmart-gray-500">
                   <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
                   </svg>
@@ -186,20 +188,20 @@ export default function ProductList({ contractAddress, signer, search, filter, r
           </div>
 
           <div className="mt-4 relative">
-            <div className="absolute top-0 bottom-0 left-6 w-0.5 bg-gray-800 z-0"></div>
+            <div className="absolute top-0 bottom-0 left-6 w-0.5 bg-walmart-gray-300 z-0"></div>
             <div className="relative pl-8 space-y-4">
               {p.history.map((h, idx) => (
                 <div key={idx} className="relative z-10">
-                  <div className="absolute top-[2px] left-[-20px] w-4 h-4 rounded-full bg-gray-700 border-2 border-gray-600 flex items-center justify-center">
-                    <div className={`w-2 h-2 rounded-full ${h.status === 0 ? "bg-blue-500" :
-                      h.status === 1 ? "bg-yellow-500" : "bg-green-500"}`}></div>
+                  <div className="absolute top-[2px] left-[-20px] w-4 h-4 rounded-full bg-white border-2 border-walmart-gray-300 flex items-center justify-center">
+                    <div className={`w-2 h-2 rounded-full ${h.status === 0 ? "bg-walmart-blue-500" :
+                      h.status === 1 ? "bg-walmart-yellow-500" : "bg-green-500"}`}></div>
                   </div>
                   <div className="text-sm">
-                    <span className={`font-medium ${h.status === 0 ? "text-blue-400" :
-                      h.status === 1 ? "text-yellow-400" : "text-green-400"}`}>
+                    <span className={`font-medium ${h.status === 0 ? "text-walmart-blue-600" :
+                      h.status === 1 ? "text-walmart-yellow-600" : "text-green-600"}`}>
                       {StatusNames[h.status]}
                     </span>
-                    <span className="text-gray-500 ml-2">
+                    <span className="text-walmart-gray-500 ml-2">
                       {new Date(h.timestamp * 1e3).toLocaleString()}
                     </span>
                   </div>
@@ -209,7 +211,7 @@ export default function ProductList({ contractAddress, signer, search, filter, r
           </div>
 
           {updatingId === p.id && (
-            <div className="mt-4 text-center py-2 bg-indigo-900/20 rounded-lg text-indigo-400 text-sm">
+            <div className="mt-4 text-center py-2 bg-walmart-blue-50 rounded-lg text-walmart-blue-600 text-sm">
               Updating status on blockchain...
             </div>
           )}
