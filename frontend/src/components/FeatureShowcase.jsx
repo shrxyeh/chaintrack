@@ -67,7 +67,7 @@ export default function FeatureShowcase() {
               <h3 className="text-xl font-bold text-walmart-gray-900 mb-3">
                 {feature.title}
               </h3>
-              <p className="text-walmart-gray-700 leading-relaxed">
+              <p className="text-walmart-gray-800 leading-relaxed">
                 {feature.description}
               </p>
             </div>
@@ -79,15 +79,15 @@ export default function FeatureShowcase() {
           <div className="grid md:grid-cols-3 gap-8 text-center">
             <div>
               <div className="text-3xl font-bold text-walmart-blue-600 mb-2">99.9%</div>
-              <div className="text-walmart-gray-700">Data Accuracy</div>
+              <div className="text-walmart-gray-800">Data Accuracy</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-walmart-blue-600 mb-2">50%</div>
-              <div className="text-walmart-gray-700">Cost Reduction</div>
+              <div className="text-walmart-gray-800">Cost Reduction</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-walmart-blue-600 mb-2">24/7</div>
-              <div className="text-walmart-gray-700">Real-time Monitoring</div>
+              <div className="text-walmart-gray-800">Real-time Monitoring</div>
             </div>
           </div>
         </div>

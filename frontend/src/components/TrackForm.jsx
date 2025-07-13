@@ -70,7 +70,7 @@ export default function TrackForm({ contractAddress, signer, onCreate }) {
 
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-walmart-gray-700 mb-2">Product Name</label>
+          <label className="block text-sm font-medium text-walmart-gray-800 mb-2">Product Name</label>
           <input
             className="walmart-input"
             placeholder="Enter product name"
@@ -80,7 +80,7 @@ export default function TrackForm({ contractAddress, signer, onCreate }) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-walmart-gray-700 mb-2">Origin</label>
+          <label className="block text-sm font-medium text-walmart-gray-800 mb-2">Origin</label>
           <input
             className="walmart-input"
             placeholder="Enter origin location"
@@ -115,8 +115,8 @@ export default function TrackForm({ contractAddress, signer, onCreate }) {
       )}
 
       <div className="mt-6 pt-6 border-t border-walmart-gray-200">
-        <h4 className="text-sm font-semibold text-walmart-gray-700 mb-3">How it works</h4>
-        <ul className="space-y-2 text-sm text-walmart-gray-600">
+        <h4 className="text-sm font-semibold text-walmart-gray-800 mb-3">How it works</h4>
+        <ul className="space-y-2 text-sm text-walmart-gray-700">
           <li className="flex items-start">
             <div className="mt-1 mr-2 w-2 h-2 rounded-full bg-walmart-blue-600"></div>
             <span>Each product is registered on the blockchain</span>

@@ -46,7 +46,7 @@ export default function HowItWorks() {
           <h2 className="text-4xl font-bold text-walmart-gray-900 mb-4">
             How It Works
           </h2>
-          <p className="text-xl text-walmart-gray-700 max-w-3xl mx-auto">
+          <p className="text-xl text-walmart-gray-800 max-w-3xl mx-auto">
             Our blockchain-powered supply chain tracking system makes it easy to ensure 
             transparency and authenticity throughout your product journey.
           </p>
@@ -78,7 +78,7 @@ export default function HowItWorks() {
                 <h3 className="text-2xl font-bold text-walmart-gray-900 mb-4">
                   {step.title}
                 </h3>
-                <p className="text-walmart-gray-700 leading-relaxed">
+                <p className="text-walmart-gray-800 leading-relaxed">
                   {step.description}
                 </p>
               </div>
@@ -92,7 +92,7 @@ export default function HowItWorks() {
             <h3 className="text-2xl font-bold text-walmart-gray-900 mb-4">
               Ready to Get Started?
             </h3>
-            <p className="text-walmart-gray-700 mb-6">
+            <p className="text-walmart-gray-800 mb-6">
               Join thousands of businesses already using blockchain technology to transform their supply chains.
             </p>
             <a href="/dashboard" className="walmart-btn-secondary text-lg px-8 py-4">

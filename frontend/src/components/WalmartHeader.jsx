@@ -30,8 +30,8 @@ export default function WalmartHeader({ walletAddress, onConnectWallet, onDiscon
               to="/" 
               className={`font-medium transition-colors ${
                 isActive('/') 
-                  ? 'text-walmart-blue-600 border-b-2 border-walmart-blue-600 pb-1' 
-                  : 'text-walmart-gray-700 hover:text-walmart-blue-600'
+                  ? 'text-walmart-blue-700 border-b-2 border-walmart-blue-700 pb-1' 
+                  : 'text-walmart-gray-800 hover:text-walmart-blue-700'
               }`}
             >
               Home
@@ -40,21 +40,21 @@ export default function WalmartHeader({ walletAddress, onConnectWallet, onDiscon
               to="/dashboard" 
               className={`font-medium transition-colors ${
                 isActive('/dashboard') 
-                  ? 'text-walmart-blue-600 border-b-2 border-walmart-blue-600 pb-1' 
-                  : 'text-walmart-gray-700 hover:text-walmart-blue-600'
+                  ? 'text-walmart-blue-700 border-b-2 border-walmart-blue-700 pb-1' 
+                  : 'text-walmart-gray-800 hover:text-walmart-blue-700'
               }`}
             >
               Dashboard
             </Link>
             <a 
               href="#features" 
-              className="text-walmart-gray-700 hover:text-walmart-blue-600 font-medium transition-colors"
+              className="text-walmart-gray-800 hover:text-walmart-blue-700 font-medium transition-colors"
             >
               Features
             </a>
             <a 
               href="#how-it-works" 
-              className="text-walmart-gray-700 hover:text-walmart-blue-600 font-medium transition-colors"
+              className="text-walmart-gray-800 hover:text-walmart-blue-700 font-medium transition-colors"
             >
               How It Works
             </a>
@@ -118,7 +118,7 @@ export default function WalmartHeader({ walletAddress, onConnectWallet, onDiscon
               <Link 
                 to="/" 
                 className={`block font-medium ${
-                  isActive('/') ? 'text-walmart-blue-600' : 'text-walmart-gray-700'
+                  isActive('/') ? 'text-walmart-blue-700' : 'text-walmart-gray-800'
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -127,7 +127,7 @@ export default function WalmartHeader({ walletAddress, onConnectWallet, onDiscon
               <Link 
                 to="/dashboard" 
                 className={`block font-medium ${
-                  isActive('/dashboard') ? 'text-walmart-blue-600' : 'text-walmart-gray-700'
+                  isActive('/dashboard') ? 'text-walmart-blue-700' : 'text-walmart-gray-800'
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -135,14 +135,14 @@ export default function WalmartHeader({ walletAddress, onConnectWallet, onDiscon
               </Link>
               <a 
                 href="#features" 
-                className="block text-walmart-gray-700 font-medium"
+                className="block text-walmart-gray-800 font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Features
               </a>
               <a 
                 href="#how-it-works" 
-                className="block text-walmart-gray-700 font-medium"
+                className="block text-walmart-gray-800 font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
                 How It Works
