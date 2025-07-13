@@ -22,6 +22,7 @@ export default function ProductList({ contractAddress, signer, search, filter, r
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState(null);
+  const [showUpdateToast, setShowUpdateToast] = useState(false);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -55,6 +56,10 @@ export default function ProductList({ contractAddress, signer, search, filter, r
           });
         }
         setProducts(items);
+        if (refreshKey > 0) {
+          setShowUpdateToast(true);
+          setTimeout(() => setShowUpdateToast(false), 2500);
+        }
       } catch (e) {
         console.error("Error fetching products:", e);
       } finally {
@@ -129,6 +134,11 @@ export default function ProductList({ contractAddress, signer, search, filter, r
 
   return (
     <div className="grid grid-cols-1 gap-4">
+      {showUpdateToast && (
+        <div className="fixed top-6 right-6 z-50 bg-green-800 border border-green-600 text-green-200 px-6 py-3 rounded-lg shadow-lg animate-fade">
+          Product list updated!
+        </div>
+      )}
       {filtered.map(p => (
         <div
           key={p.id}
