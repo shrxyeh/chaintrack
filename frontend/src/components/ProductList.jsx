@@ -19,7 +19,7 @@ const StatusIcons = [
   </svg>
 ];
 
-export default function ProductList({ contractAddress, signer, search, filter, refreshKey }) {
+export default function ProductList({ contractAddress, signer, search, filter, refreshKey, onProductsUpdate }) {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState(null);
@@ -57,6 +57,7 @@ export default function ProductList({ contractAddress, signer, search, filter, r
           });
         }
         setProducts(items);
+        onProductsUpdate?.(items);
         if (refreshKey > 0) {
           setShowUpdateToast(true);
           animateSuccess(document.querySelector('.update-toast'));
