@@ -7,11 +7,35 @@ export default function KafkaFlowVisualizer({ trigger = null }) {
   const { publishEvent } = useKafkaSimulation();
 
   const steps = [
-    { id: 'source', label: 'Event Source', icon: '📱' },
-    { id: 'producer', label: 'Kafka Producer', icon: '📤' },
-    { id: 'topic', label: 'Topic', icon: '📋' },
-    { id: 'consumer', label: 'AI Consumer', icon: '🤖' },
-    { id: 'insight', label: 'Dashboard', icon: '📊' }
+    { id: 'source', label: 'Event Source', icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <rect x="4" y="4" width="16" height="16" rx="2" strokeWidth="2" stroke="currentColor" fill="none" />
+        <path d="M9 9h6v6H9z" strokeWidth="2" stroke="currentColor" fill="none" />
+      </svg>
+    ) },
+    { id: 'producer', label: 'Kafka Producer', icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" />
+        <polyline points="7 10 12 15 17 10" strokeWidth="2" stroke="currentColor" fill="none" />
+      </svg>
+    ) },
+    { id: 'topic', label: 'Topic', icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <rect x="6" y="4" width="12" height="16" rx="2" strokeWidth="2" stroke="currentColor" fill="none" />
+        <path d="M9 8h6M9 12h6M9 16h6" strokeWidth="2" stroke="currentColor" fill="none" />
+      </svg>
+    ) },
+    { id: 'consumer', label: 'AI Consumer', icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2a2 2 0 012-2h2a2 2 0 012 2v2m-6 0v2a2 2 0 002 2h2a2 2 0 002-2v-2m-6 0h6" />
+      </svg>
+    ) },
+    { id: 'insight', label: 'Dashboard', icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3v18h18" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 15l3-3 4 4 5-5" />
+      </svg>
+    ) },
   ];
 
   useEffect(() => {

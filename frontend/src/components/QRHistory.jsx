@@ -24,13 +24,33 @@ export default function QRHistory() {
   const getScanTypeIcon = (type) => {
     switch (type) {
       case 'product':
-        return '📦';
+        return (
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <rect x="3" y="7" width="18" height="13" rx="2" strokeWidth="2" stroke="currentColor" fill="none" />
+            <path d="M16 3v4M8 3v4" strokeWidth="2" stroke="currentColor" fill="none" />
+          </svg>
+        );
       case 'batch':
-        return '🏷️';
+        return (
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <rect x="4" y="4" width="16" height="16" rx="2" strokeWidth="2" stroke="currentColor" fill="none" />
+            <path d="M8 8h8v8H8z" strokeWidth="2" stroke="currentColor" fill="none" />
+          </svg>
+        );
       case 'location':
-        return '📍';
+        return (
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 21c-4.418 0-8-4.03-8-9a8 8 0 1116 0c0 4.97-3.582 9-8 9z" />
+            <circle cx="12" cy="12" r="3" strokeWidth="2" stroke="currentColor" fill="none" />
+          </svg>
+        );
       default:
-        return '📱';
+        return (
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <rect x="4" y="4" width="16" height="16" rx="2" strokeWidth="2" stroke="currentColor" fill="none" />
+            <path d="M9 9h6v6H9z" strokeWidth="2" stroke="currentColor" fill="none" />
+          </svg>
+        );
     }
   };
 

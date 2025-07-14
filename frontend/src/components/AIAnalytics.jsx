@@ -56,7 +56,11 @@ export default function AIAnalytics() {
               <p className="text-walmart-blue-600 text-sm font-medium">Prediction Accuracy</p>
               <p className="text-2xl font-bold text-walmart-blue-900">{analytics.predictions}%</p>
             </div>
-            <div className="text-3xl">🤖</div>
+            <div className="text-3xl">
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2a2 2 0 012-2h2a2 2 0 012 2v2m-6 0v2a2 2 0 002 2h2a2 2 0 002-2v-2m-6 0h6" />
+              </svg>
+            </div>
           </div>
         </div>
 
@@ -66,7 +70,12 @@ export default function AIAnalytics() {
               <p className="text-green-600 text-sm font-medium">System Accuracy</p>
               <p className="text-2xl font-bold text-green-900">{analytics.accuracy}%</p>
             </div>
-            <div className="text-3xl">📊</div>
+            <div className="text-3xl">
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3v18h18" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 15l3-3 4 4 5-5" />
+              </svg>
+            </div>
           </div>
         </div>
 
@@ -76,7 +85,12 @@ export default function AIAnalytics() {
               <p className="text-walmart-yellow-600 text-sm font-medium">Scans Today</p>
               <p className="text-2xl font-bold text-walmart-yellow-900">{analytics.scansToday}</p>
             </div>
-            <div className="text-3xl">📱</div>
+            <div className="text-3xl">
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <rect x="4" y="4" width="16" height="16" rx="2" strokeWidth="2" stroke="currentColor" fill="none" />
+                <path d="M9 9h6v6H9z" strokeWidth="2" stroke="currentColor" fill="none" />
+              </svg>
+            </div>
           </div>
         </div>
 
@@ -86,7 +100,11 @@ export default function AIAnalytics() {
               <p className="text-red-600 text-sm font-medium">Anomalies Detected</p>
               <p className="text-2xl font-bold text-red-900">{analytics.anomalies}</p>
             </div>
-            <div className="text-3xl">⚠️</div>
+            <div className="text-3xl">
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>

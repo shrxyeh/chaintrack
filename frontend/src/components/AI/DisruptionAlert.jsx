@@ -11,7 +11,11 @@ export default function DisruptionAlert({ onDismiss }) {
       title: 'Potential Delay Detected',
       message: 'AI has detected a possible delay on Batch #21A due to weather conditions',
       severity: 'medium',
-      icon: '⚠️'
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      )
     },
     {
       id: 2,
@@ -19,7 +23,11 @@ export default function DisruptionAlert({ onDismiss }) {
       title: 'Route Optimization Available',
       message: 'AI suggests alternative route for Shipment #45B to reduce transit time by 12 hours',
       severity: 'low',
-      icon: '🛣️'
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12h18M3 12l4-4m-4 4l4 4" />
+        </svg>
+      )
     },
     {
       id: 3,
@@ -27,7 +35,11 @@ export default function DisruptionAlert({ onDismiss }) {
       title: 'Early Delivery Predicted',
       message: 'Shipment #78C is ahead of schedule and will arrive 2 days early',
       severity: 'low',
-      icon: '🚀'
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+        </svg>
+      )
     },
     {
       id: 4,
@@ -35,7 +47,12 @@ export default function DisruptionAlert({ onDismiss }) {
       title: 'Supply Chain Disruption',
       message: 'Critical: Port congestion detected affecting 3 active shipments',
       severity: 'high',
-      icon: '🚨'
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none" />
+          <rect x="9" y="7" width="6" height="8" rx="3" stroke="currentColor" strokeWidth="2" fill="none" />
+        </svg>
+      )
     }
   ];
 

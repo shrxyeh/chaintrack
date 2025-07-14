@@ -155,11 +155,34 @@ export default function Dashboard({ signer: propSigner }) {
   };
 
   const tabs = [
-    { id: 'overview', label: 'Overview', icon: '📊' },
-    { id: 'tracking', label: 'Product Tracking', icon: '📦' },
-    { id: 'analytics', label: 'AI Analytics', icon: '🤖' },
-    { id: 'interactive', label: 'Interactive Dashboard', icon: '📈' },
-    { id: 'qr-history', label: 'QR History', icon: '📱' }
+    { id: 'overview', label: 'Overview', icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3v18h18" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 15l3-3 4 4 5-5" />
+      </svg>
+    ) },
+    { id: 'tracking', label: 'Product Tracking', icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <rect x="3" y="7" width="18" height="13" rx="2" strokeWidth="2" stroke="currentColor" fill="none" />
+        <path d="M16 3v4M8 3v4" strokeWidth="2" stroke="currentColor" fill="none" />
+      </svg>
+    ) },
+    { id: 'analytics', label: 'AI Analytics', icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2a2 2 0 012-2h2a2 2 0 012 2v2m-6 0v2a2 2 0 002 2h2a2 2 0 002-2v-2m-6 0h6" />
+      </svg>
+    ) },
+    { id: 'interactive', label: 'Interactive Dashboard', icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 17l6-6 4 4 8-8" />
+      </svg>
+    ) },
+    { id: 'qr-history', label: 'QR History', icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <rect x="4" y="4" width="16" height="16" rx="2" strokeWidth="2" stroke="currentColor" fill="none" />
+        <path d="M9 9h6v6H9z" strokeWidth="2" stroke="currentColor" fill="none" />
+      </svg>
+    ) },
   ];
 
   if (isLoading) {
