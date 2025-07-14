@@ -3,6 +3,8 @@ import { BrowserProvider, Contract } from "ethers";
 import SupplyChainABI from "../SupplyChain.json";
 import { getMetaMaskProvider } from "../utils/ethProvider";
 import { animateSuccess } from "../utils/animations";
+import AIPredictionCard from "./AI/AIPredictionCard";
+import DisruptionAlert from "./AI/DisruptionAlert";
 
 const StatusNames = ["Created", "In Transit", "Delivered"];
 const StatusColors = ["bg-walmart-blue-600", "bg-walmart-yellow-500", "bg-green-600"];
@@ -26,6 +28,8 @@ export default function ProductList({ contractAddress, signer, search, filter, r
   const [showUpdateToast, setShowUpdateToast] = useState(false);
   const [showQRModal, setShowQRModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showDisruption, setShowDisruption] = useState(true);
+  const [selectedProductForAI, setSelectedProductForAI] = useState(null);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -182,6 +186,11 @@ export default function ProductList({ contractAddress, signer, search, filter, r
         </div>
       )}
       
+      {/* Disruption Alert */}
+      {showDisruption && (
+        <DisruptionAlert onDismiss={() => setShowDisruption(false)} />
+      )}
+      
       {/* QR Modal */}
       {showQRModal && selectedProduct && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -259,89 +268,108 @@ export default function ProductList({ contractAddress, signer, search, filter, r
       )}
 
       {filtered.map(p => (
-        <div
-          key={p.id}
-          className="walmart-card p-5 transition-all duration-300 hover:shadow-walmart-lg"
-        >
-          <div className="flex justify-between items-start flex-wrap gap-5">
-            <div className="flex items-start">
-              <div className={`p-2 rounded-lg ${StatusColors[p.status]} mr-4`}>
-                {StatusIcons[p.status]}
+        <div key={p.id} className="space-y-4">
+          <div className="walmart-card p-5 transition-all duration-300 hover:shadow-walmart-lg">
+            <div className="flex justify-between items-start flex-wrap gap-5">
+              <div className="flex items-start">
+                <div className={`p-2 rounded-lg ${StatusColors[p.status]} mr-4`}>
+                  {StatusIcons[p.status]}
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold">{p.name}
+                    <span className="text-walmart-gray-500 ml-2 font-normal">#{p.id.toString().padStart(4, '0')}</span>
+                  </h3>
+                  <p className="text-sm text-walmart-gray-600 mt-1">Origin: {p.origin}</p>
+                  <p className="text-xs text-walmart-gray-500 mt-1">
+                    Created: {new Date(p.createdAt * 1e3).toLocaleDateString()}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-lg font-bold">{p.name}
-                  <span className="text-walmart-gray-500 ml-2 font-normal">#{p.id.toString().padStart(4, '0')}</span>
-                </h3>
-                <p className="text-sm text-walmart-gray-600 mt-1">Origin: {p.origin}</p>
-                <p className="text-xs text-walmart-gray-500 mt-1">
-                  Created: {new Date(p.createdAt * 1e3).toLocaleDateString()}
-                </p>
-              </div>
-            </div>
 
-            <div className="flex items-center space-x-3">
-              <span className={`px-3 py-1 rounded-full text-sm font-medium text-white ${StatusColors[p.status]}`}>
-                {StatusNames[p.status]}
-              </span>
+              <div className="flex items-center space-x-3">
+                <span className={`px-3 py-1 rounded-full text-sm font-medium text-white ${StatusColors[p.status]}`}>
+                  {StatusNames[p.status]}
+                </span>
 
-              {/* QR Code Button */}
-              <button
-                onClick={() => showQRCode(p)}
-                className="p-2 text-walmart-blue-600 hover:text-walmart-blue-800 hover:bg-walmart-blue-50 rounded-lg transition-colors"
-                title="Generate QR Code"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M12 12h-4.01M12 12v4m6-4h.01M12 8h.01" />
-                </svg>
-              </button>
-
-              <div className="relative">
-                <select
-                  className="bg-white border border-walmart-gray-300 rounded-lg py-2 pl-3 pr-8 appearance-none focus:outline-none focus:ring-2 focus:ring-walmart-blue-500 focus:border-transparent text-sm"
-                  value={p.status}
-                  onChange={e => changeStatus(p.id, Number(e.target.value))}
-                  disabled={updatingId === p.id || !signer}
+                {/* AI Predictions Button */}
+                <button
+                  onClick={() => setSelectedProductForAI(selectedProductForAI === p.id ? null : p.id)}
+                  className="p-2 text-walmart-blue-600 hover:text-walmart-blue-800 hover:bg-walmart-blue-50 rounded-lg transition-colors"
+                  title="AI Predictions"
                 >
-                  {StatusNames.map((name, idx) => (
-                    <option key={idx} value={idx}>{name}</option>
-                  ))}
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-walmart-gray-500">
-                  <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                   </svg>
+                </button>
+
+                {/* QR Code Button */}
+                <button
+                  onClick={() => showQRCode(p)}
+                  className="p-2 text-walmart-blue-600 hover:text-walmart-blue-800 hover:bg-walmart-blue-50 rounded-lg transition-colors"
+                  title="Generate QR Code"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M12 12h-4.01M12 12v4m6-4h.01M12 8h.01" />
+                  </svg>
+                </button>
+
+                <div className="relative">
+                  <select
+                    className="bg-white border border-walmart-gray-300 rounded-lg py-2 pl-3 pr-8 appearance-none focus:outline-none focus:ring-2 focus:ring-walmart-blue-500 focus:border-transparent text-sm"
+                    value={p.status}
+                    onChange={e => changeStatus(p.id, Number(e.target.value))}
+                    disabled={updatingId === p.id || !signer}
+                  >
+                    {StatusNames.map((name, idx) => (
+                      <option key={idx} value={idx}>{name}</option>
+                    ))}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-walmart-gray-500">
+                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="mt-4 relative">
-            <div className="absolute top-0 bottom-0 left-6 w-0.5 bg-walmart-gray-300 z-0"></div>
-            <div className="relative pl-8 space-y-4">
-              {p.history.map((h, idx) => (
-                <div key={idx} className="relative z-10">
-                  <div className="absolute top-[2px] left-[-20px] w-4 h-4 rounded-full bg-white border-2 border-walmart-gray-300 flex items-center justify-center">
-                    <div className={`w-2 h-2 rounded-full ${h.status === 0 ? "bg-walmart-blue-500" :
-                      h.status === 1 ? "bg-walmart-yellow-500" : "bg-green-500"}`}></div>
+            <div className="mt-4 relative">
+              <div className="absolute top-0 bottom-0 left-6 w-0.5 bg-walmart-gray-300 z-0"></div>
+              <div className="relative pl-8 space-y-4">
+                {p.history.map((h, idx) => (
+                  <div key={idx} className="relative z-10">
+                    <div className="absolute top-[2px] left-[-20px] w-4 h-4 rounded-full bg-white border-2 border-walmart-gray-300 flex items-center justify-center">
+                      <div className={`w-2 h-2 rounded-full ${h.status === 0 ? "bg-walmart-blue-500" :
+                        h.status === 1 ? "bg-walmart-yellow-500" : "bg-green-500"}`}></div>
+                    </div>
+                    <div className="text-sm">
+                      <span className={`font-medium ${h.status === 0 ? "text-walmart-blue-600" :
+                        h.status === 1 ? "text-walmart-yellow-600" : "text-green-600"}`}>
+                        {StatusNames[h.status]}
+                      </span>
+                      <span className="text-walmart-gray-500 ml-2">
+                        {new Date(h.timestamp * 1e3).toLocaleString()}
+                      </span>
+                    </div>
                   </div>
-                  <div className="text-sm">
-                    <span className={`font-medium ${h.status === 0 ? "text-walmart-blue-600" :
-                      h.status === 1 ? "text-walmart-yellow-600" : "text-green-600"}`}>
-                      {StatusNames[h.status]}
-                    </span>
-                    <span className="text-walmart-gray-500 ml-2">
-                      {new Date(h.timestamp * 1e3).toLocaleString()}
-                    </span>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
 
-          {updatingId === p.id && (
-            <div className="mt-4 text-center py-2 bg-walmart-blue-50 rounded-lg text-walmart-blue-600 text-sm">
-              Updating status on blockchain...
-            </div>
+            {updatingId === p.id && (
+              <div className="mt-4 text-center py-2 bg-walmart-blue-50 rounded-lg text-walmart-blue-600 text-sm">
+                Updating status on blockchain...
+              </div>
+            )}
+          </div>
+          
+          {/* AI Prediction Card */}
+          {selectedProductForAI === p.id && (
+            <AIPredictionCard 
+              productId={p.id}
+              productName={p.name}
+              status={p.status}
+            />
           )}
         </div>
       ))}

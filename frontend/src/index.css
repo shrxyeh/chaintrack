@@ -101,6 +101,10 @@
   .walmart-hero-bg {
     background: linear-gradient(135deg, #0071CE 0%, #004C91 50%, #001F3D 100%);
   }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
 }
 
 @layer utilities {

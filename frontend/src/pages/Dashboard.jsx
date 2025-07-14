@@ -8,6 +8,8 @@ import AIAnalytics from "../components/AIAnalytics";
 import InteractiveDashboard from "../components/InteractiveDashboard";
 import QRHistory from "../components/QRHistory";
 import { setupCardHovers } from "../utils/animations";
+import AILoader from "../components/AI/AILoader";
+import AIAssistant from "../components/AI/AIAssistant";
 
 const CONTRACT_ADDRESS = "0x9d610A4Df5020Ebea026C04FFD73037b20751965";
 
@@ -22,6 +24,7 @@ export default function Dashboard({ signer: propSigner }) {
   const [showQRScanner, setShowQRScanner] = useState(false);
   const [products, setProducts] = useState([]);
   const [qrFormData, setQrFormData] = useState({ name: "", origin: "" });
+  const [showAILoader, setShowAILoader] = useState(false);
 
   const connectWallet = async () => {
     const mmProvider = getMetaMaskProvider();
@@ -57,6 +60,13 @@ export default function Dashboard({ signer: propSigner }) {
     const timer = setTimeout(() => setIsLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
+
+  // Show AI loader when switching to certain tabs
+  useEffect(() => {
+    if (activeTab === 'analytics' || activeTab === 'interactive') {
+      setShowAILoader(true);
+    }
+  }, [activeTab]);
 
   useEffect(() => {
     if (propSigner) {
@@ -407,6 +417,21 @@ export default function Dashboard({ signer: propSigner }) {
           
           {activeTab === 'qr-history' && <QRHistory />}
         </div>
+
+        {/* AI Loader */}
+        <AILoader 
+          isVisible={showAILoader}
+          onComplete={() => setShowAILoader(false)}
+          messages={[
+            "Analyzing supply chain patterns...",
+            "Processing blockchain data...",
+            "Generating AI insights...",
+            "Optimizing predictions..."
+          ]}
+        />
+
+        {/* AI Assistant */}
+        <AIAssistant />
 
         {/* QR Scanner Modal */}
         <QRScanner
