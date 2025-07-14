@@ -95,6 +95,41 @@ This project enables secure, transparent tracking of products across a supply ch
 
 ---
 
+## Progressive Web App (PWA) Support
+
+This project is fully PWA-enabled! You can install it on your device for an app-like experience, including offline support and home screen icons.
+
+### Features
+- **Installable** on desktop and mobile (Android/iOS).
+- **Offline support** via service worker.
+- **Custom app icons** for all platforms.
+- **Manifest and meta tags** for best PWA compliance.
+
+### How to Use
+
+#### Local Development
+1. Start the frontend:
+   ```bash
+   cd frontend
+   npm run dev
+   ```
+2. Open the app in Chrome or Edge.
+3. Click the install icon in the address bar, or use the browser menu to "Add to Home Screen".
+
+#### Production/Deployment
+- The PWA will work automatically on your deployed site.
+- Make sure the following files exist in `frontend/public/`:
+  - `pwa-192x192.png`
+  - `pwa-512x512.png`
+  - `manifest.webmanifest`
+- The manifest and icons are referenced in `index.html` and `vite.config.js`.
+
+#### Troubleshooting
+- If the app icon does not update, clear your browser cache, uninstall the PWA, and reinstall.
+- For iOS, the icon may appear rounded or with a gloss effect (this is normal).
+
+---
+
 ## Python QR Code Generator (Optional)
 A script is provided at the project root to generate sample QR codes for testing:
 ```bash
