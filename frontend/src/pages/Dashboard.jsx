@@ -456,14 +456,15 @@ export default function Dashboard({ signer: propSigner }) {
           
           {activeTab === 'interactive' && <InteractiveDashboard products={products} />}
           
-          {activeTab === 'analytics' && (
+          {activeTab === 'qr-history' && <QRHistory />}
+
+          {/* AI Chatbox - Show on analytics and interactive tabs */}
+          {(activeTab === 'analytics' || activeTab === 'interactive') && (
             <AIChatbox 
               products={products}
               onInsightGenerated={(insights) => console.log('Generated insights:', insights)}
             />
           )}
-          
-          {activeTab === 'qr-history' && <QRHistory />}
         </div>
 
         {/* AI Loader */}

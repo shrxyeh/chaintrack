@@ -254,12 +254,6 @@ export default function InteractiveAnalyticsDashboard() {
       {/* AI Analytics Section */}
       <AIAnalyticsSection />
 
-      {/* AI Chatbox for Data Insights */}
-      <AIChatbox 
-        products={[]} 
-        onInsightGenerated={(insights) => setChatInsights(insights)}
-      />
-
       {/* Product Overview */}
       <ProductOverview />
 
