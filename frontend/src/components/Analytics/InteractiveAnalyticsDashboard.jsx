@@ -4,11 +4,13 @@ import ChartContainer from './ChartContainer';
 import HeatMap from './HeatMap';
 import ProductOverview from './ProductOverview';
 import AIAnalyticsSection from './AIAnalyticsSection';
+import AIChatbox from '../AI/AIChatbox';
 
 export default function InteractiveAnalyticsDashboard() {
   const [dateRange, setDateRange] = useState('7d');
   const [selectedMetric, setSelectedMetric] = useState(null);
   const [realTimeData, setRealTimeData] = useState({});
+  const [chatInsights, setChatInsights] = useState([]);
 
   // Generate fake real-time data
   useEffect(() => {
@@ -251,6 +253,12 @@ export default function InteractiveAnalyticsDashboard() {
 
       {/* AI Analytics Section */}
       <AIAnalyticsSection />
+
+      {/* AI Chatbox for Data Insights */}
+      <AIChatbox 
+        products={[]} 
+        onInsightGenerated={(insights) => setChatInsights(insights)}
+      />
 
       {/* Product Overview */}
       <ProductOverview />

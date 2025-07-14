@@ -15,6 +15,7 @@ import KafkaConsole from "../components/Kafka/KafkaConsole";
 import KafkaFlowVisualizer from "../components/Kafka/KafkaFlowVisualizer";
 import KafkaToaster from "../components/Kafka/KafkaToaster";
 import KafkaStatusHUD from "../components/Kafka/KafkaStatusHUD";
+import AIChatbox from "../components/AI/AIChatbox";
 
 const CONTRACT_ADDRESS = "0x9d610A4Df5020Ebea026C04FFD73037b20751965";
 
@@ -454,6 +455,13 @@ export default function Dashboard({ signer: propSigner }) {
           {activeTab === 'analytics' && <AIAnalytics />}
           
           {activeTab === 'interactive' && <InteractiveDashboard products={products} />}
+          
+          {activeTab === 'analytics' && (
+            <AIChatbox 
+              products={products}
+              onInsightGenerated={(insights) => console.log('Generated insights:', insights)}
+            />
+          )}
           
           {activeTab === 'qr-history' && <QRHistory />}
         </div>
