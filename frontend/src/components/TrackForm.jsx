@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import { Contract } from "ethers";
 import SupplyChainABI from "../SupplyChain.json";
 import { animateFormError, animateSuccess } from "../utils/animations";
+import { useKafkaSimulation } from "./Kafka/KafkaSimContext";
 
 export default function TrackForm({ contractAddress, signer, onCreate, initialName = "", initialOrigin = "" }) {
   const [name, setName] = useState(initialName);
   const [origin, setOrigin] = useState(initialOrigin);
   const [isLoading, setIsLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState(null);
+  const { publishEvent } = useKafkaSimulation();
 
   // Update form when initial values change (from QR scan)
   useEffect(() => {
@@ -34,9 +36,28 @@ export default function TrackForm({ contractAddress, signer, onCreate, initialNa
 
     try {
       const contract = new Contract(contractAddress, SupplyChainABI.abi, signer);
+      
+      // Publish Kafka event for product creation
+      publishEvent('SHIPMENT_UPDATE', {
+        productName: name,
+        origin: origin,
+        action: 'CREATE',
+        topic: 'chaintrack.events.shipments',
+        source: 'track-form'
+      });
+      
       const tx = await contract.createProduct(name, origin);
       setStatusMessage({ type: "info", message: "Waiting for transaction confirmation..." });
       await tx.wait();
+      
+      // Publish success event
+      publishEvent('AI_ANALYSIS', {
+        productName: name,
+        action: 'CREATED',
+        topic: 'chaintrack.analytics.predictions',
+        source: 'blockchain'
+      });
+      
       const successMsg = { type: "success", message: "✅ Product created successfully!" };
       setStatusMessage(successMsg);
       animateSuccess(document.querySelector('.success-message'));

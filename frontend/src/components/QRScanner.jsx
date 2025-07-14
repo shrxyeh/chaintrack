@@ -1,10 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
+import { useKafkaSimulation } from "./Kafka/KafkaSimContext";
 
 export default function QRScanner({ onScan, isActive, onClose }) {
   const [scanning, setScanning] = useState(false);
   const [error, setError] = useState(null);
   const scannerRef = useRef(null);
+  const { publishEvent } = useKafkaSimulation();
 
   useEffect(() => {
     if (isActive && !scanning) {
@@ -32,6 +34,14 @@ export default function QRScanner({ onScan, isActive, onClose }) {
       scanner.render(
         (decodedText, decodedResult) => {
           console.log("QR Code detected:", decodedText);
+          
+          // Publish Kafka event for QR scan
+          publishEvent('QR_SCAN', {
+            qrData: decodedText,
+            topic: 'chaintrack.events.qr_scans',
+            source: 'qr-scanner'
+          });
+          
           onScan(decodedText, decodedResult);
           stopScanner();
           onClose();

@@ -10,6 +10,11 @@ import QRHistory from "../components/QRHistory";
 import { setupCardHovers } from "../utils/animations";
 import AILoader from "../components/AI/AILoader";
 import AIAssistant from "../components/AI/AIAssistant";
+import { KafkaSimProvider } from "../components/Kafka/KafkaSimContext";
+import KafkaConsole from "../components/Kafka/KafkaConsole";
+import KafkaFlowVisualizer from "../components/Kafka/KafkaFlowVisualizer";
+import KafkaToaster from "../components/Kafka/KafkaToaster";
+import KafkaStatusHUD from "../components/Kafka/KafkaStatusHUD";
 
 const CONTRACT_ADDRESS = "0x9d610A4Df5020Ebea026C04FFD73037b20751965";
 
@@ -25,6 +30,7 @@ export default function Dashboard({ signer: propSigner }) {
   const [products, setProducts] = useState([]);
   const [qrFormData, setQrFormData] = useState({ name: "", origin: "" });
   const [showAILoader, setShowAILoader] = useState(false);
+  const [kafkaFlowTrigger, setKafkaFlowTrigger] = useState(null);
 
   const connectWallet = async () => {
     const mmProvider = getMetaMaskProvider();
@@ -97,6 +103,10 @@ export default function Dashboard({ signer: propSigner }) {
 
   const handleQRScan = (data, result) => {
     console.log('QR Scanned:', data);
+    
+    // Trigger Kafka flow visualization
+    setKafkaFlowTrigger(Date.now());
+    
     let productId = null;
     let productName = null;
     let location = null;
@@ -174,8 +184,15 @@ export default function Dashboard({ signer: propSigner }) {
   }
 
   return (
-    <div className="min-h-screen bg-walmart-blue-50">
-      <div className="container-walmart px-4 py-8">
+    <KafkaSimProvider>
+      <div className="min-h-screen bg-walmart-blue-50">
+        {/* Kafka Components */}
+        <KafkaStatusHUD />
+        <KafkaToaster />
+        <KafkaConsole />
+        <KafkaFlowVisualizer trigger={kafkaFlowTrigger} />
+        
+        <div className="container-walmart px-4 py-8">
         {/* Enhanced Dashboard Header */}
         <div className="mb-8">
           <div className="walmart-card p-6">
@@ -440,6 +457,7 @@ export default function Dashboard({ signer: propSigner }) {
           onClose={() => setShowQRScanner(false)}
         />
       </div>
-    </div>
+      </div>
+    </KafkaSimProvider>
   );
 }

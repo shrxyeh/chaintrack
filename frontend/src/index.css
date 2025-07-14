@@ -105,6 +105,22 @@
   .animate-fade-in {
     animation: fadeIn 0.6s ease-out;
   }
+  
+  .kafka-terminal {
+    font-family: 'Courier New', monospace;
+    background: #1a1a1a;
+    color: #00ff00;
+  }
+  
+  .kafka-event-flow {
+    background: linear-gradient(90deg, transparent 0%, rgba(59, 130, 246, 0.1) 50%, transparent 100%);
+    animation: flow 2s ease-in-out infinite;
+  }
+  
+  @keyframes flow {
+    0%, 100% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
+  }
 }
 
 @layer utilities {
