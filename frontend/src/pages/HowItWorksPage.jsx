@@ -34,9 +34,9 @@ export default function HowItWorksPage() {
     },
     {
       number: "02",
-      title: "Supply Chain Tracking",
+      title: "ChainTrack.ai Tracking",
       subtitle: "Real-time Movement Monitoring",
-      description: "Track product movement through each stage of the supply chain with real-time updates. Every status change, location update, and quality check is recorded with cryptographic security and timestamp verification.",
+      description: "Track product movement through each stage with ChainTrack.ai. Every status change, location update, and quality check is recorded with cryptographic security and timestamp verification.",
       details: [
         "GPS location tracking integration",
         "Automated status updates via IoT",
@@ -55,7 +55,7 @@ export default function HowItWorksPage() {
       number: "03",
       title: "Verification & Delivery",
       subtitle: "Authenticity Confirmation",
-      description: "Complete the supply chain cycle with final verification and delivery confirmation. Customers and stakeholders can verify product authenticity and access the complete journey history through our transparent blockchain records.",
+      description: "Complete the cycle with final verification and delivery confirmation. Customers and stakeholders can verify product authenticity and access the complete journey history through our transparent blockchain.",
       details: [
         "Final delivery confirmation",
         "Customer verification portal",
@@ -75,7 +75,7 @@ export default function HowItWorksPage() {
   const technicalProcess = [
     {
       title: "Smart Contract Deployment",
-      description: "Ethereum-based smart contracts handle all supply chain logic",
+      description: "Ethereum-based smart contracts handle all ChainTrack.ai logic",
       icon: "⚡"
     },
     {
@@ -125,11 +125,11 @@ export default function HowItWorksPage() {
         <div className="container-walmart">
           <div className="text-center text-white">
             <h1 className="text-5xl font-bold mb-6">
-              How Blockchain Supply Chain Works
+              How ChainTrack.ai Works
             </h1>
             <p className="text-xl text-walmart-blue-100 max-w-3xl mx-auto mb-8">
               Discover the step-by-step process of how blockchain technology creates 
-              transparency, security, and trust in modern supply chain management.
+              transparency, security, and trust in modern supply chain management with ChainTrack.ai.
             </p>
             <Link to="/dashboard" className="walmart-btn-secondary text-lg px-8 py-4">
               Try It Yourself
@@ -146,8 +146,7 @@ export default function HowItWorksPage() {
               Three Simple Steps to Transparency
             </h2>
             <p className="text-xl text-walmart-gray-800 max-w-3xl mx-auto">
-              Our blockchain platform simplifies complex supply chain tracking into 
-              three intuitive steps that anyone can follow.
+              Our platform simplifies complex tracking into actionable insights with ChainTrack.ai.
             </p>
           </div>
 
@@ -257,8 +256,7 @@ export default function HowItWorksPage() {
               Proven Results
             </h2>
             <p className="text-xl text-walmart-gray-800 max-w-3xl mx-auto">
-              See the measurable impact that blockchain supply chain tracking 
-              delivers for businesses across industries.
+              See the measurable impact that ChainTrack.ai tracking delivers for businesses across industries.
             </p>
           </div>
 
@@ -288,7 +286,7 @@ export default function HowItWorksPage() {
               See It in Action
             </h2>
             <p className="text-xl text-walmart-blue-100 max-w-2xl mx-auto mb-8">
-              Ready to experience blockchain supply chain tracking firsthand? 
+              Ready to experience ChainTrack.ai tracking firsthand? 
               Start with our interactive dashboard and create your first product.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

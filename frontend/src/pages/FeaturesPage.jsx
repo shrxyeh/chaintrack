@@ -34,7 +34,7 @@ export default function FeaturesPage() {
         </svg>
       ),
       title: "Complete Transparency",
-      description: "Gain full visibility into your supply chain with real-time tracking and comprehensive product histories accessible to all stakeholders.",
+      description: "Gain full visibility into your supply chain with ChainTrack.ai. Real-time tracking and comprehensive product histories accessible to all stakeholders.",
       benefits: [
         "End-to-end visibility",
         "Real-time status updates",
@@ -49,7 +49,7 @@ export default function FeaturesPage() {
         </svg>
       ),
       title: "Enhanced Security",
-      description: "Protect your supply chain data with military-grade encryption and distributed ledger technology that prevents unauthorized access.",
+      description: "Protect your data with military-grade encryption and distributed ledger technology by ChainTrack.ai that prevents unauthorized access.",
       benefits: [
         "Cryptographic security",
         "Distributed architecture",
@@ -64,7 +64,7 @@ export default function FeaturesPage() {
         </svg>
       ),
       title: "Smart Automation",
-      description: "Automate supply chain processes with smart contracts that execute predefined actions when specific conditions are met.",
+      description: "Automate processes with ChainTrack.ai smart contracts that execute predefined actions when specific conditions are met.",
       benefits: [
         "Automated workflows",
         "Conditional execution",
@@ -79,7 +79,7 @@ export default function FeaturesPage() {
         </svg>
       ),
       title: "Advanced Analytics",
-      description: "Leverage blockchain data for powerful insights into supply chain performance, bottlenecks, and optimization opportunities.",
+      description: "Leverage ChainTrack.ai data for powerful insights into performance, bottlenecks, and optimization opportunities.",
       benefits: [
         "Performance metrics",
         "Predictive analytics",
@@ -137,7 +137,7 @@ export default function FeaturesPage() {
               Blockchain Features
             </h1>
             <p className="text-xl text-walmart-blue-100 max-w-3xl mx-auto mb-8">
-              Discover how blockchain technology revolutionizes supply chain management 
+              Discover how ChainTrack.ai revolutionizes supply chain management 
               with cutting-edge features designed for transparency, security, and efficiency.
             </p>
             <Link to="/dashboard" className="walmart-btn-secondary text-lg px-8 py-4">
@@ -156,7 +156,7 @@ export default function FeaturesPage() {
             </h2>
             <p className="text-xl text-walmart-gray-800 max-w-3xl mx-auto">
               Our blockchain platform provides enterprise-grade features that address 
-              every aspect of modern supply chain management.
+              every aspect of modern supply chain management with ChainTrack.ai.
             </p>
           </div>
 
@@ -231,11 +231,11 @@ export default function FeaturesPage() {
         <div className="container-walmart">
           <div className="text-center text-white">
             <h2 className="text-4xl font-bold mb-6">
-              Ready to Transform Your Supply Chain?
+              Ready to Transform with ChainTrack.ai?
             </h2>
             <p className="text-xl text-walmart-blue-100 max-w-2xl mx-auto mb-8">
               Join thousands of businesses already leveraging blockchain technology 
-              to create more transparent, secure, and efficient supply chains.
+              to create more transparent, secure, and efficient supply chains with ChainTrack.ai.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/dashboard" className="walmart-btn-secondary text-lg px-8 py-4">

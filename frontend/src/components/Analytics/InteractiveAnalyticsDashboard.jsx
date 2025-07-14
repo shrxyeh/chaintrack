@@ -183,7 +183,7 @@ export default function InteractiveAnalyticsDashboard() {
         <div className="flex flex-col lg:flex-row lg:items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-gray-900 mb-2">Interactive Analytics Dashboard</h1>
-            <p className="text-gray-600">Real-time insights and AI-powered analytics for your supply chain</p>
+            <p className="text-gray-600">Real-time insights and AI-powered analytics for your ChainTrack.ai data</p>
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 mt-4 lg:mt-0">

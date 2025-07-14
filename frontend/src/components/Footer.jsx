@@ -13,12 +13,12 @@ export default function Footer() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold">Supply Chain Tracker</h3>
+                  <h3 className="text-xl font-bold">ChainTrack.ai</h3>
                   <p className="text-sm text-gray-400">Blockchain-Powered Transparency</p>
                 </div>
               </div>
               <p className="text-gray-400 mb-4 max-w-md">
-                Revolutionizing supply chain management with blockchain technology. 
+                Revolutionizing supply chain management with ChainTrack.ai. 
                 Ensuring transparency, security, and authenticity for businesses worldwide.
               </p>
               <div className="flex space-x-4">
@@ -66,7 +66,7 @@ export default function Footer() {
           {/* Bottom Bar */}
           <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm">
-              © {new Date().getFullYear()} Supply Chain Tracker. All rights reserved.
+              © {new Date().getFullYear()} ChainTrack.ai. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>

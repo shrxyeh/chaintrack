@@ -8,9 +8,9 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
-        name: 'ChainTrack Bolt',
+        name: 'ChainTrack.ai',
         short_name: 'ChainTrack',
-        description: 'AI-powered blockchain supply chain tracker',
+        description: 'AI-powered supply chain platform by ChainTrack.ai',
         theme_color: '#0071CE',
         background_color: '#ffffff',
         display: 'standalone',

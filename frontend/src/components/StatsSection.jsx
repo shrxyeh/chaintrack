@@ -58,7 +58,7 @@ export default function StatsSection() {
             Platform Statistics
           </h2>
           <p className="text-xl text-walmart-blue-100 max-w-3xl mx-auto">
-            See how our blockchain supply chain platform is making a real impact 
+            See how ChainTrack.ai is making a real impact 
             across industries worldwide.
           </p>
         </div>

@@ -26,8 +26,8 @@ export default function WalmartHeader({ walletAddress, onConnectWallet, onDiscon
               </svg>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-walmart-blue-600">Supply Chain</h1>
-              <p className="text-xs text-walmart-gray-600 -mt-1">Blockchain Tracker</p>
+              <h1 className="text-xl font-bold text-walmart-blue-600">ChainTrack.ai</h1>
+              <p className="text-xs text-walmart-gray-600 -mt-1">AI Supply Chain Platform</p>
             </div>
           </Link>
 

@@ -1,4 +1,4 @@
-# Supply Chain Tracker
+# ChainTrack.ai
 
 A modern, blockchain-powered supply chain tracking platform for transparent product management, built with Solidity smart contracts, a React frontend, and QR code integration.
 

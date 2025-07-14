@@ -223,7 +223,7 @@ export default function Dashboard({ signer: propSigner }) {
             <div className="flex flex-col lg:flex-row lg:items-center justify-between">
               <div className="mb-6 lg:mb-0">
                 <h1 className="text-3xl font-bold text-walmart-gray-900 mb-2">
-                  Advanced Supply Chain Dashboard
+                  Advanced ChainTrack.ai Dashboard
                 </h1>
                 <p className="text-walmart-gray-700">
                   AI-powered analytics with QR scanning and real-time blockchain monitoring
@@ -472,7 +472,7 @@ export default function Dashboard({ signer: propSigner }) {
           isVisible={showAILoader}
           onComplete={() => setShowAILoader(false)}
           messages={[
-            "Analyzing supply chain patterns...",
+            "Analyzing ChainTrack.ai patterns...",
             "Processing blockchain data...",
             "Generating AI insights...",
             "Optimizing predictions..."

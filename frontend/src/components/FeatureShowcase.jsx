@@ -28,7 +28,7 @@ export default function FeatureShowcase() {
         </svg>
       ),
       title: "Unbreakable Security",
-      description: "Blockchain technology ensures that all supply chain data is cryptographically secured and cannot be tampered with or falsified."
+      description: "ChainTrack.ai ensures that all data is cryptographically secured and cannot be tampered with or falsified."
     },
     {
       icon: (
@@ -37,7 +37,7 @@ export default function FeatureShowcase() {
         </svg>
       ),
       title: "Real-time Tracking",
-      description: "Monitor product status updates in real-time as they move through the supply chain, with instant notifications for status changes."
+      description: "Monitor product status updates in real-time as they move through the chain, with instant notifications for status changes."
     },
     {
       icon: (
@@ -55,10 +55,10 @@ export default function FeatureShowcase() {
       <div className="container-walmart">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-walmart-gray-900 mb-4">
-            Why Choose Blockchain for Supply Chain?
+            Why Choose ChainTrack.ai?
           </h2>
           <p className="text-xl text-walmart-gray-800 max-w-3xl mx-auto">
-            Transform your supply chain with cutting-edge blockchain technology that delivers 
+            Transform your operations with ChainTrack.ai that delivers 
             unprecedented transparency, security, and efficiency.
           </p>
         </div>

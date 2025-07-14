@@ -25,7 +25,7 @@ export default function HowItWorks() {
     {
       number: "02",
       title: "Track Movement",
-      description: "Update product status as it moves through the supply chain. Each update is cryptographically secured and timestamped on the blockchain.",
+      description: "Update product status as it moves through the chain. Each update is cryptographically secured and timestamped on ChainTrack.ai.",
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -52,7 +52,7 @@ export default function HowItWorks() {
             How It Works
           </h2>
           <p className="text-xl text-walmart-gray-800 max-w-3xl mx-auto">
-            Our blockchain-powered supply chain tracking system makes it easy to ensure 
+            Our ChainTrack.ai-powered tracking system makes it easy to ensure 
             transparency and authenticity throughout your product journey.
           </p>
         </div>
@@ -98,7 +98,7 @@ export default function HowItWorks() {
               Ready to Get Started?
             </h3>
             <p className="text-walmart-gray-800 mb-6">
-              Join thousands of businesses already using blockchain technology to transform their supply chains.
+              Join thousands of businesses already using ChainTrack.ai to transform their supply chains.
             </p>
             <a href="/dashboard" className="walmart-btn-secondary text-lg px-8 py-4">
               Start Tracking Now

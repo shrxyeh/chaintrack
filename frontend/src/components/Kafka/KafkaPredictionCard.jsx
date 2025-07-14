@@ -96,7 +96,7 @@ export default function KafkaPredictionCard({ productId, productName, onClose })
                 </div>
               </div>
               <h4 className="text-lg font-semibold text-gray-900 mb-2">AI Processing</h4>
-              <p className="text-gray-600 mb-4">Analyzing supply chain data via Kafka...</p>
+              <p className="text-gray-600 mb-4">Analyzing ChainTrack.ai data via Kafka...</p>
               <div className="text-xs text-gray-500 space-y-1">
                 <div>📤 Publishing to Kafka topic...</div>
                 <div>🤖 AI consumer processing...</div>

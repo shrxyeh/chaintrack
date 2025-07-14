@@ -29,7 +29,7 @@ export default function HeroSection() {
             {/* Content */}
             <div className="text-center lg:text-left">
               <h1 className="hero-title text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-                Transparent Supply Chain
+                Transparent ChainTrack.ai
                 <span className="block text-walmart-yellow-400">Powered by Blockchain</span>
               </h1>
               
