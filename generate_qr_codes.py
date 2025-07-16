@@ -11,56 +11,13 @@ from datetime import datetime
 
 # Sample product data
 SAMPLE_PRODUCTS = [
-    {
-        "productId": "001",
-        "productName": "Organic Apples",
-        "location": "Cold Storage Unit A"
-    },
+  
     {
         "productId": "002", 
         "productName": "Premium Coffee Beans",
-        "location": "Warehouse B - Section 3"
-    },
-    {
-        "productId": "003",
-        "productName": "Fresh Milk",
-        "location": "Refrigerated Storage"
-    },
-    {
-        "productId": "004",
-        "productName": "Whole Grain Bread",
-        "location": "Bakery Storage"
-    },
-    {
-        "productId": "005",
-        "productName": "Free Range Eggs",
-        "location": "Egg Storage Unit"
-    },
-    {
-        "productId": "006",
-        "productName": "Organic Tomatoes",
-        "location": "Produce Section A"
-    },
-    {
-        "productId": "007",
-        "productName": "Greek Yogurt",
-        "location": "Dairy Storage Unit"
-    },
-    {
-        "productId": "008",
-        "productName": "Almond Milk",
-        "location": "Plant-Based Section"
-    },
-    {
-        "productId": "009",
-        "productName": "Quinoa",
-        "location": "Grain Storage Unit"
-    },
-    {
-        "productId": "010",
-        "productName": "Avocados",
-        "location": "Produce Section B"
+        "location": "Munnar, Kerela"
     }
+   
 ]
 
 def generate_qr_code(data, filename):

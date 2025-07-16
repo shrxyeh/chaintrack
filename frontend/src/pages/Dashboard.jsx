@@ -17,7 +17,7 @@ import KafkaToaster from "../components/Kafka/KafkaToaster";
 import KafkaStatusHUD from "../components/Kafka/KafkaStatusHUD";
 import AIChatbox from "../components/AI/AIChatbox";
 
-const CONTRACT_ADDRESS = "0x9d610A4Df5020Ebea026C04FFD73037b20751965";
+const CONTRACT_ADDRESS = "0x735FC358fba08faf099678174daCd74bF8CFABEC";
 
 export default function Dashboard({ signer: propSigner }) {
   const [refreshKey, setRefreshKey] = useState(0);
