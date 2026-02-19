@@ -1,5 +1,7 @@
 # ChainTrack.ai
 
+**Live:** [chaintrack-opal.vercel.app](https://chaintrack-opal.vercel.app)
+
 ChainTrack.ai is a blockchain-powered supply chain tracking platform built on Ethereum. Every product registration, status update, and delivery is recorded on-chain, making the entire history publicly verifiable and permanent.
 
 ## What it does
@@ -110,7 +112,7 @@ chaintrack/
 │       └── SupplyChain.json
 ├── foundry.toml
 ├── .env.example
-└── vercel.json
+└── frontend/vercel.json
 ```
 
 ## License
