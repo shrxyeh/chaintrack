@@ -1,10 +1,12 @@
 require("dotenv").config();
 require("@nomiclabs/hardhat-ethers");
+require("@nomicfoundation/hardhat-verify");
 
 const {
   RPC_URL_SEPOLIA,
   SEPOLIA_CHAIN_ID,
-  PRIVATE_KEY
+  PRIVATE_KEY,
+  ETHERSCAN_API_KEY
 } = process.env;
 
 if (!RPC_URL_SEPOLIA || !SEPOLIA_CHAIN_ID || !PRIVATE_KEY) {
@@ -21,5 +23,8 @@ module.exports = {
       accounts: [PRIVATE_KEY]
     }
   },
-  solidity: "0.8.0"
+  solidity: "0.8.0",
+  etherscan: {
+    apiKey: ETHERSCAN_API_KEY
+  }
 };
