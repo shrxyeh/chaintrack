@@ -2,13 +2,10 @@
 node_modules/
 **/node_modules/
 
-# Hardhat artifacts & cache
-artifacts/
+# Foundry build output & cache
+out/
 cache/
-
-# Hardhat local network
-hardhat.networks.json
-hh-data/
+broadcast/
 
 # Environment files
 .env
@@ -45,5 +42,5 @@ frontend/.cache/
 # Optional
 coverage/
 
-# Generated QR codes 
+# Generated QR codes
 qr_codes/

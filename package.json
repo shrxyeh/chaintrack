@@ -11,11 +11,7 @@
     "install-frontend": "cd frontend && npm install"
   },
   "devDependencies": {
-    "@nomicfoundation/hardhat-verify": "^3.0.10",
-    "@nomiclabs/hardhat-ethers": "^2.2.3",
-    "@nomiclabs/hardhat-etherscan": "^3.1.8",
     "dotenv": "^16.6.1",
-    "ethers": "^5.8.0",
-    "hardhat": "^2.24.3"
+    "ethers": "^5.8.0"
   }
 }

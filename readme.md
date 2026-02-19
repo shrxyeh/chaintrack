@@ -43,6 +43,7 @@ The frontend is a fully static build — no backend server, no database. All sta
 ## Smart Contract
 
 **Deployed:** [`0x92944F0b9cb0633801D9094f9765B294C1A606e6`](https://sepolia.etherscan.io/address/0x92944F0b9cb0633801D9094f9765B294C1A606e6) — Ethereum Sepolia
+**Verified:** [View source on Etherscan](https://sepolia.etherscan.io/address/0x92944F0b9cb0633801D9094f9765B294C1A606e6#code)
 **Source:** `contracts/SupplyChain.sol`
 
 ```solidity
@@ -61,7 +62,7 @@ All writes emit on-chain events (`ProductCreated`, `StatusUpdated`) and are perm
 
 | Layer | Technology |
 |---|---|
-| Smart Contract | Solidity 0.8, Hardhat |
+| Smart Contract | Solidity 0.8, Foundry |
 | Blockchain | Ethereum (Sepolia testnet) |
 | Frontend | React 19, Vite 6, React Router 7 |
 | Styling | Tailwind CSS |
@@ -77,16 +78,25 @@ All writes emit on-chain events (`ProductCreated`, `StatusUpdated`) and are perm
 
 ### Prerequisites
 
+- [Foundry](https://getfoundry.sh) — smart contract toolchain
 - Node.js 18+
 - MetaMask browser extension
 - Sepolia ETH for transactions — available free at [sepoliafaucet.com](https://sepoliafaucet.com)
+
+### Install Foundry
+
+```bash
+curl -L https://foundry.paradigm.xyz | bash
+foundryup
+```
 
 ### Install and run locally
 
 ```bash
 git clone https://github.com/shrxyeh/ChainTrack.git
 cd ChainTrack
-npm install && cd frontend && npm install
+forge install                        # install Solidity dependencies
+cd frontend && npm install && cd ..
 npm run dev
 ```
 
@@ -102,20 +112,38 @@ Create a `.env` file in the project root:
 
 ```env
 RPC_URL_SEPOLIA=https://eth-sepolia.g.alchemy.com/v2/YOUR_KEY
-SEPOLIA_CHAIN_ID=11155111
 PRIVATE_KEY=your_deployment_wallet_private_key
+ETHERSCAN_API_KEY=your_etherscan_api_key
 ```
 
-> Use a dedicated deployment wallet with only enough ETH for gas. The `.env` file is gitignored and never committed.
+> Use a dedicated deployment wallet with only enough ETH for gas. The `.env` file is gitignored and never committed. For production deployments, use a hardware wallet with `--ledger` flag instead of a software key.
 
-### 2. Compile and deploy
+### 2. Compile
 
 ```bash
-npx hardhat compile
-npx hardhat run scripts/deploy.js --network sepolia
+forge build
 ```
 
-Copy the printed contract address into `CONTRACT_ADDRESS` in `frontend/src/pages/Dashboard.jsx`.
+### 3. Deploy
+
+```bash
+forge script script/Deploy.s.sol:DeploySupplyChain \
+  --rpc-url $RPC_URL_SEPOLIA \
+  --private-key $PRIVATE_KEY \
+  --broadcast
+```
+
+### 4. Verify on Etherscan
+
+```bash
+forge verify-contract <DEPLOYED_ADDRESS> \
+  contracts/SupplyChain.sol:SupplyChain \
+  --chain sepolia \
+  --etherscan-api-key $ETHERSCAN_API_KEY \
+  --watch
+```
+
+Copy the deployed address into `CONTRACT_ADDRESS` in `frontend/src/pages/Dashboard.jsx`, then update `frontend/src/SupplyChain.json` with the ABI from `out/SupplyChain.sol/SupplyChain.json`.
 
 ---
 
@@ -125,8 +153,11 @@ Copy the printed contract address into `CONTRACT_ADDRESS` in `frontend/src/pages
 chaintrack/
 ├── contracts/
 │   └── SupplyChain.sol          # Core Solidity contract
+├── script/
+│   └── Deploy.s.sol             # Foundry deployment script
 ├── scripts/
-│   └── deploy.js                # Hardhat deployment script
+│   └── seed.js                  # Node.js script to populate on-chain data
+├── lib/                         # Foundry dependencies (forge-std)
 ├── frontend/
 │   ├── public/                  # PWA icons and static assets
 │   └── src/
@@ -142,7 +173,7 @@ chaintrack/
 │       ├── utils/               # ethProvider.js, animations.js
 │       ├── App.jsx
 │       └── SupplyChain.json     # Contract ABI
-├── hardhat.config.js
+├── foundry.toml
 ├── .env.example
 └── vercel.json
 ```
@@ -151,10 +182,10 @@ chaintrack/
 
 ## Security
 
-- The deployment private key is used solely by the Hardhat deploy script and is never bundled into the frontend build
+- The deployment private key is used solely by the Foundry deploy script and is never bundled into the frontend build
 - The frontend uses MetaMask for all transaction signing — no private keys are ever held by the application
 - All contract interactions are read-only unless the user explicitly approves a transaction in MetaMask
-- For production deployments, consider using a hardware wallet (`npx hardhat --ledger`) rather than a software key in `.env`
+- For production deployments, use a hardware wallet with `--ledger` flag rather than a software key in `.env`
 
 ---
 
