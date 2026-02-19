@@ -1,68 +1,27 @@
 # ChainTrack.ai
 
-A production-grade, blockchain-powered supply chain tracking platform. ChainTrack.ai enables end-to-end product traceability using Ethereum smart contracts — every registration, status change, and delivery is recorded permanently on-chain, publicly verifiable, and tamper-proof.
+ChainTrack.ai is a blockchain-powered supply chain tracking platform built on Ethereum. Every product registration, status update, and delivery is recorded on-chain, making the entire history publicly verifiable and permanent.
 
----
+## What it does
 
-## Overview
+Supply chain fraud and counterfeiting are massive problems. ChainTrack solves this by putting product history on the blockchain so any stakeholder can verify it independently, without relying on a central authority.
 
-Supply chain fraud, counterfeiting, and lack of transparency cost businesses billions annually. ChainTrack.ai solves this by anchoring product history to the Ethereum blockchain — creating an immutable ledger that any stakeholder can verify independently, with no trusted intermediary required.
-
----
+Products move through three stages: **Created → In Transit → Delivered**. Each transition is timestamped and recorded permanently. Anyone with the product ID or QR code can look up the full history.
 
 ## Features
 
-- **On-chain Product Registration** — Register products with name and origin, permanently stored on Ethereum
-- **Three-stage Status Lifecycle** — `Created → In Transit → Delivered`, each transition recorded with a block timestamp
-- **Immutable Audit Trail** — Complete, tamper-proof history of every status change per product
-- **QR Code Integration** — Scan QR codes to retrieve product data; generate and download QR codes linked to on-chain records
-- **AI Analytics Dashboard** — Demand forecasting, route optimization insights, and disruption alerts
-- **MetaMask Integration** — Browser wallet connection for transaction signing; no custodial keys
-- **Progressive Web App** — Installable on desktop and mobile; works offline for read-only views
-
----
-
-## Architecture
-
-```
-[User Browser]
-     │
-     ├── React Frontend  (Vite · Tailwind CSS · ethers.js)
-     │        │
-     │        ├── MetaMask ──────────────────► Ethereum Sepolia
-     │        │                                      │
-     │        └── QR Scanner (html5-qrcode)    SupplyChain.sol
-     │
-     └── Vercel (Static CDN)
-```
-
-The frontend is a fully static build — no backend server, no database. All state lives on-chain.
-
----
-
-## Smart Contract
-
-**Deployed:** [`0x92944F0b9cb0633801D9094f9765B294C1A606e6`](https://sepolia.etherscan.io/address/0x92944F0b9cb0633801D9094f9765B294C1A606e6) — Ethereum Sepolia
-**Verified:** [View source on Etherscan](https://sepolia.etherscan.io/address/0x92944F0b9cb0633801D9094f9765B294C1A606e6#code)
-**Source:** `contracts/SupplyChain.sol`
-
-```solidity
-enum Status { Created, InTransit, Delivered }
-
-function createProduct(string name, string origin) external
-function updateStatus(uint256 id, Status status) external
-function getHistory(uint256 id) external view returns (Status[], uint256[])
-```
-
-All writes emit on-chain events (`ProductCreated`, `StatusUpdated`) and are permanently indexed by Etherscan.
-
----
+- Register products with name and origin
+- Track status changes with on-chain timestamps
+- Scan QR codes to pull up product history instantly
+- Generate and download QR codes for any tracked product
+- AI analytics dashboard with demand forecasting and route insights
+- MetaMask wallet integration for transaction signing
+- Works as a Progressive Web App on desktop and mobile
 
 ## Tech Stack
 
 | Layer | Technology |
 |---|---|
-| Smart Contract | Solidity 0.8, Foundry |
 | Blockchain | Ethereum (Sepolia testnet) |
 | Frontend | React 19, Vite 6, React Router 7 |
 | Styling | Tailwind CSS |
@@ -72,41 +31,30 @@ All writes emit on-chain events (`ProductCreated`, `StatusUpdated`) and are perm
 | Wallet | ethers.js v6, MetaMask |
 | Hosting | Vercel |
 
----
+## Running locally
 
-## Getting Started
+You need [Foundry](https://getfoundry.sh), Node.js 18+, and the MetaMask extension.
 
-### Prerequisites
-
-- [Foundry](https://getfoundry.sh) — smart contract toolchain
-- Node.js 18+
-- MetaMask browser extension
-- Sepolia ETH for transactions — available free at [sepoliafaucet.com](https://sepoliafaucet.com)
-
-### Install Foundry
+Install Foundry first if you don't have it:
 
 ```bash
 curl -L https://foundry.paradigm.xyz | bash
 foundryup
 ```
 
-### Install and run locally
+Then clone and run:
 
 ```bash
 git clone https://github.com/shrxyeh/ChainTrack.git
 cd ChainTrack
-forge install                        # install Solidity dependencies
+forge install
 cd frontend && npm install && cd ..
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173), connect MetaMask to the Sepolia network, and start tracking.
+Open [http://localhost:5173](http://localhost:5173), connect MetaMask to Sepolia, and you're good to go. You can get free Sepolia ETH at [sepoliafaucet.com](https://sepoliafaucet.com).
 
----
-
-## Deploying Your Own Contract
-
-### 1. Set up environment
+## Deploying your own instance
 
 Create a `.env` file in the project root:
 
@@ -116,24 +64,20 @@ PRIVATE_KEY=your_deployment_wallet_private_key
 ETHERSCAN_API_KEY=your_etherscan_api_key
 ```
 
-> Use a dedicated deployment wallet with only enough ETH for gas. The `.env` file is gitignored and never committed. For production deployments, use a hardware wallet with `--ledger` flag instead of a software key.
+Use a dedicated wallet with just enough ETH for gas. This file is gitignored and never committed. For production, use a hardware wallet with the `--ledger` flag instead.
 
-### 2. Compile
+Build and deploy:
 
 ```bash
 forge build
-```
 
-### 3. Deploy
-
-```bash
 forge script script/Deploy.s.sol:DeploySupplyChain \
   --rpc-url $RPC_URL_SEPOLIA \
   --private-key $PRIVATE_KEY \
   --broadcast
 ```
 
-### 4. Verify on Etherscan
+Verify on Etherscan:
 
 ```bash
 forge verify-contract <DEPLOYED_ADDRESS> \
@@ -143,51 +87,31 @@ forge verify-contract <DEPLOYED_ADDRESS> \
   --watch
 ```
 
-Copy the deployed address into `CONTRACT_ADDRESS` in `frontend/src/pages/Dashboard.jsx`, then update `frontend/src/SupplyChain.json` with the ABI from `out/SupplyChain.sol/SupplyChain.json`.
+After deploying, update `CONTRACT_ADDRESS` in `frontend/src/pages/Dashboard.jsx` with the new address.
 
----
-
-## Project Structure
+## Project structure
 
 ```
 chaintrack/
 ├── contracts/
-│   └── SupplyChain.sol          # Core Solidity contract
+│   └── SupplyChain.sol
 ├── script/
-│   └── Deploy.s.sol             # Foundry deployment script
+│   └── Deploy.s.sol
 ├── scripts/
-│   └── seed.js                  # Node.js script to populate on-chain data
-├── lib/                         # Foundry dependencies (forge-std)
+│   └── seed.js
+├── lib/
 ├── frontend/
-│   ├── public/                  # PWA icons and static assets
+│   ├── public/
 │   └── src/
 │       ├── components/
-│       │   ├── AI/              # Analytics and prediction components
-│       │   ├── Analytics/       # Charts and dashboard widgets
-│       │   ├── Header.jsx
-│       │   ├── ProductList.jsx
-│       │   ├── TrackForm.jsx
-│       │   ├── QRScanner.jsx
-│       │   └── QRHistory.jsx
-│       ├── pages/               # Dashboard, Landing, Features, HowItWorks
-│       ├── utils/               # ethProvider.js, animations.js
+│       ├── pages/
+│       ├── utils/
 │       ├── App.jsx
-│       └── SupplyChain.json     # Contract ABI
+│       └── SupplyChain.json
 ├── foundry.toml
 ├── .env.example
 └── vercel.json
 ```
-
----
-
-## Security
-
-- The deployment private key is used solely by the Foundry deploy script and is never bundled into the frontend build
-- The frontend uses MetaMask for all transaction signing — no private keys are ever held by the application
-- All contract interactions are read-only unless the user explicitly approves a transaction in MetaMask
-- For production deployments, use a hardware wallet with `--ledger` flag rather than a software key in `.env`
-
----
 
 ## License
 
