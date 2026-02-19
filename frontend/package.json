@@ -1,5 +1,6 @@
 {
-  "name": "frontend",
+  "name": "chaintrack-frontend",
+  "description": "ChainTrack.ai React frontend",
   "private": true,
   "version": "0.0.0",
   "type": "module",

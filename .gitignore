@@ -44,3 +44,6 @@ frontend/.cache/
 
 # Optional
 coverage/
+
+# Generated QR codes 
+qr_codes/

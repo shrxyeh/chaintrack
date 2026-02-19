@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { BrowserProvider } from "ethers";
 import { getMetaMaskProvider } from "./utils/ethProvider";
-import WalmartHeader from "./components/WalmartHeader";
+import Header from "./components/Header";
 import LandingPage from "./pages/LandingPage";
 import Dashboard from "./pages/Dashboard";
 import FeaturesPage from "./pages/FeaturesPage";
@@ -62,7 +62,7 @@ export default function App() {
   return (
     <Router>
       <div className="min-h-screen bg-white">
-        <WalmartHeader 
+        <Header
           walletAddress={walletAddress}
           onConnectWallet={connectWallet}
           onDisconnectWallet={disconnectWallet}

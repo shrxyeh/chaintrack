@@ -1,156 +1,212 @@
 # ChainTrack.ai
 
-A modern, blockchain-powered supply chain tracking platform for transparent product management, built with Solidity smart contracts, a React frontend, and QR code integration.
+A blockchain-powered supply chain tracking platform for transparent, tamper-proof product management. Built with Solidity smart contracts on Ethereum, a React frontend, QR code integration, and AI-powered analytics.
 
-## Project Overview
-This project enables secure, transparent tracking of products across a supply chain using Ethereum smart contracts. It features:
-- **Smart Contract Backend:** Solidity contract for product registration and tracking, deployed to Ethereum (Sepolia or local Hardhat).
-- **React Frontend:** User-friendly dashboard for product management, QR code scanning, analytics, and real-time updates.
-- **QR Code Integration:** Generate, scan, and manage QR codes for product tracking.
-- **Python QR Code Generator:** Script to create sample QR codes for testing/demo.
+---
+
+## Live Demo
+
+- **Frontend:** Deployed via Vercel
+- **Smart Contract:** [`0x92944F0b9cb0633801D9094f9765B294C1A606e6`](https://sepolia.etherscan.io/address/0x92944F0b9cb0633801D9094f9765B294C1A606e6) on Ethereum Sepolia testnet
 
 ---
 
 ## Features
-- **Product Registration:** Add new products with name and origin, stored on-chain.
-- **Product Tracking:** View, search, and filter all tracked products. See their status and history.
-- **QR Code Integration:**
-  - Scan QR codes to auto-fill product forms.
-  - Generate and download QR codes for each product, containing full tracking details.
-  - QR codes can be scanned to retrieve product and tracking info.
-- **Analytics & Dashboard:** Visualize supply chain metrics and analytics.
-- **History:** View all QR scans and their details.
-- **Modern UI:** Responsive, clean, and user-friendly interface.
+
+- **On-chain Product Registration** — Register products with name and origin; stored permanently on Ethereum
+- **Status Tracking** — Three-stage lifecycle: `Created → In Transit → Delivered`
+- **Immutable Audit Trail** — Every status change is recorded on-chain with a timestamp
+- **QR Code Integration** — Scan QR codes to auto-fill forms; generate and download QR codes per product
+- **AI Analytics Dashboard** — Predictive insights, demand forecasting, and disruption alerts
+- **MetaMask Wallet Integration** — Connect your wallet to sign transactions
+- **Progressive Web App (PWA)** — Installable on desktop and mobile with offline support
 
 ---
 
 ## Architecture
+
 ```
-[User] ⇄ [React Frontend (frontend/)] ⇄ [Ethereum Smart Contract (contracts/SupplyChain.sol)]
-                                      ⇄ [Python QR Generator (generate_qr_codes.py)]
+[User Browser]
+     │
+     ├── React Frontend (Vite + Tailwind CSS)
+     │        │
+     │        ├── MetaMask / ethers.js  ──► Ethereum Sepolia
+     │        │                                    │
+     │        └── QR Scanner (html5-qrcode)        └── SupplyChain.sol
+     │
+     └── Vercel (Static Hosting)
 ```
 
 ---
 
-## Backend / Smart Contract
-- **Location:** `contracts/SupplyChain.sol`
-- **Tech:** Solidity 0.8.x, Hardhat
-- **Networks:** Local Hardhat, Sepolia (Ethereum testnet)
+## Tech Stack
 
-### Setup & Deployment
-1. **Install dependencies:**
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
-2. **Configure environment variables:**
-   Create a `.env` file in the root with:
-   ```env
-   RPC_URL_SEPOLIA=YOUR_SEPOLIA_RPC_URL
-   SEPOLIA_CHAIN_ID=11155111
-   PRIVATE_KEY=YOUR_WALLET_PRIVATE_KEY
-   ```
-3. **Compile contracts:**
-   ```bash
-   npx hardhat compile
-   ```
-4. **Deploy to Sepolia:**
-   ```bash
-   npx hardhat run scripts/deploy.js --network sepolia
-   ```
-   The deployed contract address will be output in the terminal. Update the frontend config with this address.
+| Layer | Technology |
+|---|---|
+| Smart Contract | Solidity 0.8.0, Hardhat |
+| Blockchain | Ethereum (Sepolia testnet) |
+| Frontend | React 19, Vite 6, React Router 7 |
+| Styling | Tailwind CSS |
+| Animations | GSAP |
+| Charts | Chart.js |
+| QR Scanning | html5-qrcode |
+| Wallet | ethers.js v6, MetaMask |
+| Hosting | Vercel |
 
 ---
 
-## Frontend
-- **Location:** `frontend/`
-- **Tech:** React, Tailwind CSS, ethers.js
+## Smart Contract
 
-### Setup & Run
-1. **Install dependencies:**
-   ```bash
-   cd frontend
-   npm install
-   # or
-   yarn install
-   ```
-2. **Start development server:**
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
-   Visit [http://localhost:5173](http://localhost:5173) in your browser.
+**Location:** `contracts/SupplyChain.sol`
 
-### QR Code Usage
-- **Scan QR:** Use the "Scan QR Code" button to auto-fill the product form with product name and location from a QR code.
-- **Product QR:** Each product card has a QR icon. Click it to view and download a QR code containing all tracking details for that product.
-- **QR History:** All scans are saved and viewable in the QR History tab.
+```solidity
+enum Status { Created, InTransit, Delivered }
 
-### Customization
-- **Favicon:** Located at `frontend/public/favicon.svg`. Replace with your own SVG or PNG if desired.
-- **Theme:** Tailwind CSS is used for styling. Edit `frontend/tailwind.config.js` and CSS files for custom branding.
-- **QR Code API:** QR codes are generated using [api.qrserver.com](https://goqr.me/api/). You can swap this for a local library if needed.
+// Create a new product (stored on-chain)
+function createProduct(string name, string origin) external
+
+// Update product status — appends to history
+function updateStatus(uint256 id, Status status) external
+
+// Read full status history for a product
+function getHistory(uint256 id) external view returns (Status[], uint256[])
+```
+
+All product data and status history is immutable and publicly verifiable on Etherscan.
 
 ---
 
-## Progressive Web App (PWA) Support
+## Getting Started
 
-This project is fully PWA-enabled! You can install it on your device for an app-like experience, including offline support and home screen icons.
+### Prerequisites
 
-### Features
-- **Installable** on desktop and mobile (Android/iOS).
-- **Offline support** via service worker.
-- **Custom app icons** for all platforms.
-- **Manifest and meta tags** for best PWA compliance.
+- Node.js 18+
+- MetaMask browser extension
+- Sepolia testnet ETH (for transactions) — get free ETH from [sepoliafaucet.com](https://sepoliafaucet.com)
 
-### How to Use
+### 1. Clone and install
 
-#### Local Development
-1. Start the frontend:
-   ```bash
-   cd frontend
-   npm run dev
-   ```
-2. Open the app in Chrome or Edge.
-3. Click the install icon in the address bar, or use the browser menu to "Add to Home Screen".
-
-#### Production/Deployment
-- The PWA will work automatically on your deployed site.
-- Make sure the following files exist in `frontend/public/`:
-  - `pwa-192x192.png`
-  - `pwa-512x512.png`
-  - `manifest.webmanifest`
-- The manifest and icons are referenced in `index.html` and `vite.config.js`.
-
-#### Troubleshooting
-- If the app icon does not update, clear your browser cache, uninstall the PWA, and reinstall.
-- For iOS, the icon may appear rounded or with a gloss effect (this is normal).
-
----
-
-## Python QR Code Generator (Optional)
-A script is provided at the project root to generate sample QR codes for testing:
 ```bash
-pip install -r requirements.txt
-python generate_qr_codes.py
+git clone https://github.com/shrxyeh/ChainTrack.git
+cd ChainTrack
+npm install
+cd frontend && npm install
 ```
-Output will be in the `qr_codes/` directory.
+
+### 2. Run the frontend
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173). Connect MetaMask to the Sepolia testnet.
+
+---
+
+## Deploying the Smart Contract
+
+> **Security note:** The deployment private key is only needed for the one-time deploy script and should never be committed to version control. Use a **dedicated deployment wallet** funded with just enough Sepolia ETH for gas — never use a wallet that holds real funds.
+
+### 1. Create `.env` in the project root
+
+```env
+RPC_URL_SEPOLIA=https://eth-sepolia.g.alchemy.com/v2/YOUR_ALCHEMY_KEY
+SEPOLIA_CHAIN_ID=11155111
+PRIVATE_KEY=your_deployment_wallet_private_key
+```
+
+> The `.env` file is listed in `.gitignore` and will never be committed.
+
+### 2. Compile and deploy
+
+```bash
+npx hardhat compile
+npx hardhat run scripts/deploy.js --network sepolia
+```
+
+The contract address will be printed to the console. Update `CONTRACT_ADDRESS` in `frontend/src/pages/Dashboard.jsx`.
+
+### 3. (Optional) Seed demo data
+
+```bash
+node scripts/seed.js
+```
+
+This creates 10 realistic products across all three status stages for demonstration.
+
+---
+
+## Seeded Demo Products
+
+The contract is pre-populated with 10 on-chain products:
+
+| Product | Origin | Status |
+|---|---|---|
+| Organic Coffee Beans | Coorg, Karnataka, India | Delivered |
+| Industrial OLED Displays | Samsung Fab, South Korea | Delivered |
+| Pharmaceutical Grade Insulin | Novo Nordisk, Denmark | Delivered |
+| Cold-Pressed Olive Oil | Andalusia, Spain | Delivered |
+| Lithium-Ion Battery Packs | CATL Factory, China | In Transit |
+| Merino Wool Fabric Rolls | Canterbury, New Zealand | In Transit |
+| Arabica Coffee Beans | Yirgacheffe, Ethiopia | In Transit |
+| Stainless Steel Surgical Instruments | Sialkot, Pakistan | Created |
+| Organic Basmati Rice | Amritsar, India | Created |
+| Electric Vehicle Charging Modules | BYD Assembly, China | Created |
 
 ---
 
 ## Project Structure
-- `contracts/` — Solidity smart contracts (main: SupplyChain.sol)
-- `frontend/` — React frontend app
-- `scripts/` — Deployment and utility scripts
-- `qr_codes/` — Sample/generated QR codes
-- `generate_qr_codes.py` — Python QR code generator script
+
+```
+chaintrack/
+├── contracts/
+│   └── SupplyChain.sol          # Solidity smart contract
+├── scripts/
+│   ├── deploy.js                # Hardhat deploy script
+│   └── seed.js                  # Demo data seeding script
+├── frontend/
+│   ├── public/                  # Static assets and PWA icons
+│   └── src/
+│       ├── components/          # React components
+│       │   ├── AI/              # AI analytics components
+│       │   ├── Analytics/       # Charts and dashboard components
+│       │   ├── Header.jsx       # Navigation header
+│       │   ├── ProductList.jsx  # Product tracking list
+│       │   ├── TrackForm.jsx    # Product registration form
+│       │   ├── QRScanner.jsx    # QR code scanner
+│       │   └── QRHistory.jsx    # QR scan history
+│       ├── pages/               # Route-level pages
+│       ├── utils/               # Ethereum provider, animations
+│       ├── App.jsx              # Root component with routing
+│       └── SupplyChain.json     # Contract ABI
+├── hardhat.config.js
+├── .env.example                 # Environment variable template
+└── vercel.json                  # Vercel deployment config
+```
+
+---
+
+## Environment Variables
+
+| Variable | Required | Description |
+|---|---|---|
+| `RPC_URL_SEPOLIA` | Deploy only | Alchemy or Infura RPC endpoint for Sepolia |
+| `SEPOLIA_CHAIN_ID` | Deploy only | `11155111` |
+| `PRIVATE_KEY` | Deploy only | Private key of deployment wallet |
+
+The frontend requires **no environment variables** — it uses MetaMask for all signing and the contract address is hardcoded in `Dashboard.jsx`.
+
+---
+
+## Security Notes
+
+- **Private key in `.env`** is for the Hardhat deploy script only. It is never exposed to the frontend or bundled into any build artifact.
+- Use a **dedicated wallet** for deployment — fund it with only the ETH needed for gas.
+- After deploying, you can safely delete the `.env` file. The deployed contract address is all the frontend needs.
+- Alternatively, use a hardware wallet with `npx hardhat --ledger` for signing deployment transactions.
 
 ---
 
 ## License
+
 MIT
-
-
-

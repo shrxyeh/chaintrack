@@ -3,8 +3,6 @@ import { BrowserProvider, Contract } from "ethers";
 import SupplyChainABI from "../SupplyChain.json";
 import { getMetaMaskProvider } from "../utils/ethProvider";
 import { animateSuccess } from "../utils/animations";
-import { useKafkaSimulation } from "./Kafka/KafkaSimContext";
-import KafkaPredictionCard from "./Kafka/KafkaPredictionCard";
 import AIPredictionCard from "./AI/AIPredictionCard";
 import DisruptionAlert from "./AI/DisruptionAlert";
 
@@ -32,8 +30,17 @@ export default function ProductList({ contractAddress, signer, search, filter, r
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showDisruption, setShowDisruption] = useState(true);
   const [selectedProductForAI, setSelectedProductForAI] = useState(null);
-  const [showKafkaPrediction, setShowKafkaPrediction] = useState(null);
-  const { publishEvent } = useKafkaSimulation();
+  const [hiddenIds, setHiddenIds] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("chaintrack_hidden_products") || "[]");
+    } catch { return []; }
+  });
+
+  const hideProduct = (id) => {
+    const updated = [...hiddenIds, id];
+    setHiddenIds(updated);
+    localStorage.setItem("chaintrack_hidden_products", JSON.stringify(updated));
+  };
 
   useEffect(() => {
     async function fetchProducts() {
@@ -69,13 +76,6 @@ export default function ProductList({ contractAddress, signer, search, filter, r
         setProducts(items);
         onProductsUpdate?.(items);
         if (refreshKey > 0) {
-          // Publish Kafka event for product list update
-          publishEvent('SHIPMENT_UPDATE', {
-            productsCount: items.length,
-            topic: 'chaintrack.events.shipments',
-            source: 'product-list'
-          });
-          
           setShowUpdateToast(true);
           animateSuccess(document.querySelector('.update-toast'));
           setTimeout(() => setShowUpdateToast(false), 2500);
@@ -97,15 +97,6 @@ export default function ProductList({ contractAddress, signer, search, filter, r
     setUpdatingId(id);
     try {
       const contract = new Contract(contractAddress, SupplyChainABI.abi, signer);
-      
-      // Publish Kafka event for status update
-      publishEvent('STATUS_CHANGE', {
-        productId: id,
-        newStatus: StatusNames[newStatus],
-        topic: 'chaintrack.events.status_updates',
-        source: 'product-list'
-      });
-      
       const tx = await contract.updateStatus(id, newStatus);
       await tx.wait();
       
@@ -131,6 +122,7 @@ export default function ProductList({ contractAddress, signer, search, filter, r
   }
 
   const filtered = products.filter(p => {
+    if (hiddenIds.includes(p.id)) return false;
     const matchesSearch =
       p.name.toLowerCase().includes(search.toLowerCase()) ||
       p.id.toString() === search;
@@ -322,17 +314,6 @@ export default function ProductList({ contractAddress, signer, search, filter, r
                   </svg>
                 </button>
 
-                {/* Kafka Prediction Button */}
-                <button
-                  onClick={() => setShowKafkaPrediction(p)}
-                  className="p-2 text-purple-600 hover:text-purple-800 hover:bg-purple-50 rounded-lg transition-colors"
-                  title="Kafka AI Prediction"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </button>
-
                 {/* QR Code Button */}
                 <button
                   onClick={() => showQRCode(p)}
@@ -405,14 +386,6 @@ export default function ProductList({ contractAddress, signer, search, filter, r
         </div>
       ))}
       
-      {/* Kafka Prediction Modal */}
-      {showKafkaPrediction && (
-        <KafkaPredictionCard
-          productId={showKafkaPrediction.id}
-          productName={showKafkaPrediction.name}
-          onClose={() => setShowKafkaPrediction(null)}
-        />
-      )}
     </div>
   );
 }

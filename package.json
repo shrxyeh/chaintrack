@@ -1,5 +1,6 @@
 {
-  "name": "supply-chain-tracker",
+  "name": "chaintrack",
+  "description": "AI-powered blockchain supply chain tracking platform",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
